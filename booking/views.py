@@ -1,12 +1,19 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from .models import WorkSpace
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import WorkSpace, Booking
+from .forms import BookingForm
 
 
 def home(request):
+    
+    booking_form = BookingForm()
 
     return render(
         request=request,
+        context={
+            "booking_form":booking_form,
+        },
         template_name="booking/home.html",
     )
 
@@ -17,3 +24,58 @@ def workspace_list(request):
 
 # debugging line to check if workspaces are being fetched correctly
 # print(WorkSpace.objects.all())
+
+
+@login_required
+def update_booking(request, booking_id):
+    """
+    Update an existing booking related to :model:`Booking`
+    Supports AJAX POST requests
+    Return JSON response
+    """
+    if request.method == "POST":
+        try:
+            booking = Booking.objects.get(
+                pk=booking_id,
+                user=request.user,
+            )
+            booking_form = BookingForm(
+                data=request.POST,
+                instance=booking,
+            )
+
+            if booking_form.is_valid():
+                booking = booking_form.save(commit=False)
+                booking.status = "confirmed"
+                booking.save()
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Booking updated.'
+                })
+            else:
+                return JsonResponse(
+                    {
+                        'success': False,
+                        'message': (
+                            'Not updated - Errors in submitted booking form'
+                        )
+                    }
+                )
+        except Exception as e:
+            return JsonResponse(
+                {
+                    'success': False,
+                    'message': f'Error: {str(e)}'
+                },
+                status=500
+            )
+
+        pass
+    else:
+        return JsonResponse(
+                {
+                    'success': False,
+                    'message': 'Unsupported request.'
+                },
+                status=405
+            )
