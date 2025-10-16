@@ -23,6 +23,6 @@ User --------< Booking >-------- StudySpace
 
 This structure allows users to reserve available study spaces and manage their bookings efficiently.
 
-![ERD Diagram](assets/erd-diagram.png)
+![ERD Diagram](assets/images/erd-diagram.png)
 
 credit: dbdiagram.io, https://dbdiagram.io/
