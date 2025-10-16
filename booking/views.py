@@ -123,3 +123,9 @@ def my_bookings(request):
     bookings = Booking.objects.filter(user=request.user)
     return render(request, 'booking/my_bookings.html', {'bookings': bookings})
 
+@login_required
+def edit_booking_form(request, booking_id):
+    booking = Booking.objects.get(pk=booking_id, user=request.user)
+    form = BookingForm(instance=booking)
+    return render(request, 'booking/edit_booking_form.html', {'form': form, 'booking': booking})
+
