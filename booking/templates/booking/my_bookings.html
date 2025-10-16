@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block main_content %}
+<h2>My Bookings</h2>
+<ul>
+    {% for booking in bookings %}
+    <li>
+        {{ booking.workspace.name }} on {{ booking.booking_date }} 
+        ({{ booking.start_time }} - {{ booking.end_time }}) - {{ booking.status }}
+        <a href="{% url 'update_booking' booking.id %}" class="btn btn-sm btn-warning">Edit</a>
+        <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-sm btn-danger">Delete</a>
+    </li>
+    {% empty %}
+    <li>No bookings found.</li>
+    <li>
+        <a href="{% url 'workspace_list' %}" class="btn btn-primary">Add a Booking</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

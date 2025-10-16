@@ -117,4 +117,9 @@ def cancel_booking(request, booking_id):
         )
 
     pass
-    
+
+@login_required
+def my_bookings(request):
+    bookings = Booking.objects.filter(user=request.user)
+    return render(request, 'booking/my_bookings.html', {'bookings': bookings})
+
