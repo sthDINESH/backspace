@@ -10,5 +10,10 @@
 <h1>Hello, {{ user.username }}</h1>
 {% endif %}
 <h2>Backspace is live</h2>
+<form action="">
+{% crispy booking_form %}
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
 </section>
 {% endblock main_content %}
