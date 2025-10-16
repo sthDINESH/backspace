@@ -78,6 +78,7 @@ class WorkSpace(models.Model):
     )
 
     svg_shape = models.CharField(
+        max_length=10,
         choices=SHAPE_CHOICES,
     )
 
