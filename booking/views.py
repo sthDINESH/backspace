@@ -16,4 +16,4 @@ def workspace_list(request):
     return render(request, 'booking/workspace_list.html', {'workspaces': workspaces})
 
 # debugging line to check if workspaces are being fetched correctly
-print(WorkSpace.objects.all())
+# print(WorkSpace.objects.all())
