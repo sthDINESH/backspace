@@ -1,9 +1,49 @@
 {% extends "base.html" %}
-{% block content %}
+{% block main_content %}
 <h2>Available Workspaces</h2>
-<ul>
+
+<svg width="800" height="400" style="border:1px solid #ccc;">
     {% for workspace in workspaces %}
-    <li>{{ workspace.name }} (Capacity: {{ workspace.capacity }}, Location: {{ workspace.location }})</li>
+    <rect
+        x="{{ workspace.svg_x_coord }}"
+        y="{{ workspace.svg_y_coord }}"
+        width="{{ workspace.svg_width }}"
+        height="{{ workspace.svg_height }}"
+        fill="{% if workspace.is_available %}#18BC9C{% else %}#ccc{% endif %}"
+        stroke="#2C3E50"
+        stroke-width="2"
+        cursor="pointer"
+        data-id="{{ workspace.svg_id }}"
+        onclick="showWorkspaceInfo('{{ workspace.name }}', '{{ workspace.capacity }}', '{{ workspace.location }}', '{{ workspace.status }}')"
+    />
     {% endfor %}
-</ul>
+</svg>
+
+<!-- Info card (hidden by default) -->
+<div id="workspace-info-card" style="display:none; position:absolute; background:#fff; border:1px solid #ccc; padding:10px;">
+    <span id="workspace-info"></span>
+    <button onclick="showBookingModal()">Book</button>
+</div>
+<div id="booking-modal" style="display:none; position:fixed; top:30%; left:40%; background:#fff; border:2px solid #18BC9C; padding:20px;">
+    <h3>Book Workspace</h3>
+    <p id="modal-workspace-info"></p>
+    <button onclick="alert('Booking submitted!'); hideBookingModal();">Confirm</button>
+    <button onclick="hideBookingModal()">Cancel</button>
+</div>
+
+<script>
+function showWorkspaceInfo(name, capacity, location, status) {
+    document.getElementById('workspace-info').innerText =
+        `Workspace: ${name}\nCapacity: ${capacity}\nLocation: ${location}\nStatus: ${status}`;
+    document.getElementById('workspace-info-card').style.display = 'block';
+}
+function showBookingModal() {
+    document.getElementById('modal-workspace-info').innerText = document.getElementById('workspace-info').innerText;
+    document.getElementById('booking-modal').style.display = 'block';
+}
+function hideBookingModal() {
+    document.getElementById('booking-modal').style.display = 'none';
+    document.getElementById('workspace-info-card').style.display = 'none';
+}
+</script>
 {% endblock %}
