@@ -16,20 +16,18 @@ document.addEventListener("DOMContentLoaded", function () {
     if(bookingModalEl){
         bookingModal = new bootstrap.Modal(bookingModalEl);
     }
+
+    const cancelModalEl = document.querySelector("#cancel-modal");
+    let cancelModal = null;
+    if(cancelModalEl){
+        cancelModal = new bootstrap.Modal(cancelModalEl);
+    }
     
     
     document.querySelectorAll('.workspace').forEach(el => {
       el.addEventListener('click', (e) => {
         const workspaceId = el.getAttribute('data-workspace-id');
         const workspaceTitle=el.id;
-
-        if (el.classList.contains('reserved')) {
-          const t = el.parentNode.querySelector('title');
-          showToast(t ? t.textContent : 'Reserved');
-          return;
-        }
-        // else open the booking modal
-        // openBookingModal(workspaceId);
 
         if(!el.classList.contains("reserved") && bookingModal){
             bookingModalEl.querySelector(".modal-title").innerText=`Reserve ${workspaceTitle}?`;
@@ -52,6 +50,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 bookingForm.querySelector('[name="end_time"]').value = endTime;
             }
             bookingModal.show();
+        } else if(el.classList.contains("editable") && cancelModal){
+          cancelModalEl.querySelector(".modal-title").innerText=`Cancel booking?`;
+          const bookingId = el.getAttribute("data-booking-id");
+          const cancelForm = cancelModalEl.querySelector('form[data-type="cancel-booking"]');
+          if (cancelForm && bookingId) {
+              cancelForm.setAttribute('action', `/booking/${bookingId}/cancel`);
+          }
+          cancelModal.show();
         }
         console.log("Clicked");
       });

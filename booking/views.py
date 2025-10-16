@@ -36,7 +36,6 @@ def home(request):
         date = request.GET.get('date')
         start_time = request.GET.get('start_time')
         end_time = request.GET.get('end_time')
-
     else:
         now = datetime.now()
         date = now.date().isoformat()
@@ -60,6 +59,22 @@ def home(request):
 
     workspaces = WorkSpace.objects.all()
 
+    user_editable_workspaces = WorkSpace.objects.filter(
+        bookings__user=request.user,
+        bookings__booking_date=date,
+        bookings__start_time__lt=end_time,
+        bookings__end_time__gt=start_time,
+    ).distinct()
+
+    user_bookings = Booking.objects.filter(
+        user=request.user,
+        workspace__in=[ws.id for ws in workspaces],
+        booking_date=date,
+        start_time__lt=end_time,
+        end_time__gt=start_time,
+    )
+    workspace_to_user_booking_id = {b.workspace_id: b.id for b in user_bookings}
+
     return render(
         request=request,
 
@@ -68,6 +83,8 @@ def home(request):
             "check_bookings_form": check_bookings_form,
             "workspaces": workspaces,
             "available_workspaces": available_workspaces,
+            "user_editable_workspaces": user_editable_workspaces,
+            "workspace_to_booking_id": workspace_to_user_booking_id,
         },
         # template_name="booking/home.html",
         template_name="booking/interactive_floorplan.html",
@@ -183,6 +200,7 @@ def cancel_booking(request, booking_id):
     Supports requests
     Return JSON response
     """
+    print("Cancelling")
     try:
         booking = Booking.objects.get(
             pk=booking_id,
@@ -190,18 +208,18 @@ def cancel_booking(request, booking_id):
         )
 
         booking.delete()
-        return JsonResponse({
-                'success': True,
-                'message': 'Booking cancelled.'
-            })
-    except Exception as e:
-        return JsonResponse(
-            {
-                'success': False,
-                'message': f'Error: {str(e)}'
-            },
-            status=500
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            "Booking cancelled"
         )
+    except Exception as e:
+        messages.add_message(
+            request,
+            messages.ERROR,
+            f"Error cancelling booking - {e}"
+        )
+    return redirect('home')
 
 
 @login_required
