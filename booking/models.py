@@ -158,3 +158,40 @@ def booking_edit(request, pk):
     return render(request, 'booking/booking_form.html', context)
 
 
+# ==================== DELETE BOOKING (DELETE) ====================
+
+@login_required
+def booking_delete(request, pk):
+    """
+    Cancel/delete a booking.
+    """
+    booking = get_object_or_404(Booking, pk=pk, user=request.user)
+    
+    if not booking.can_be_modified():
+        messages.error(request, 'This booking cannot be cancelled (it may be in the past or already cancelled).')
+        return redirect('booking_list')
+    
+    if request.method == 'POST':
+        booking_info = f"{booking.study_space.name} on {booking.booking_date} at {booking.start_time.strftime('%H:%M')}"
+        
+        booking.cancel()
+        
+        messages.success(request, f'Booking cancelled successfully: {booking_info}')
+        return redirect('booking_list')
+    
+    context = {
+        'booking': booking,
+    }
+    
+    return render(request, 'booking/booking_confirm_delete.html', context)
+
+
+
+
+
+
+
+
+
+
+
