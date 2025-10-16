@@ -73,12 +73,14 @@ class WorkSpace(models.Model):
 
     svg_id = models.CharField(
         max_length=50,
-        unique=True,
+        # unique=True, # <-- Comment out or remove this line temporarily
         help_text="Unique ID matching the SVG element in the floor plan (e.g., 'desk-a1-svg')"
     )
 
     svg_shape = models.CharField(
+        max_length=20,  # <-- Add this line
         choices=SHAPE_CHOICES,
+        help_text="Shape type for SVG rendering (e.g., rectangle)"
     )
 
     svg_x_coord = models.PositiveIntegerField(

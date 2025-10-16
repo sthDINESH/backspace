@@ -15,11 +15,14 @@ def home(request):
 
     return render(
         request=request,
+
         context={
             "booking_form": booking_form,
             "bookings": bookings,
         },
-        template_name="booking/home.html",
+        # template_name="booking/home.html",
+        template_name="booking/interactive_floorplan.html", 
+
     )
 
 
