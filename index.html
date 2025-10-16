@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pop-up Market — Floorplan</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; padding: 12px; }
+    .floor-wrap { max-width: 1000px; margin: 0 auto; border: 1px solid #e6e6e6; }
+    svg { width: 100%; height: auto; display:block; background:#fafafa; }
+    .table { fill: #ffffff; stroke: #333; stroke-width: 2px; cursor: pointer; transition: transform .12s ease; }
+    .table:hover { transform: scale(1.02); }
+    .table.reserved { fill: #ffdddd; stroke: #cc0000; cursor: not-allowed; opacity: 0.85; }
+    .table.selected { stroke: #0066ff; stroke-width: 3px; }
+    .label { font-size: 14px; pointer-events: none; fill:#222; }
+    /* Modal */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: none; align-items:center; justify-content:center; z-index: 50; }
+    .modal { background: white; padding: 18px; border-radius: 8px; width: 320px; box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+    .modal h3 { margin: 0 0 8px; }
+    .modal input[type="text"] { width:100%; padding:8px; margin-bottom:8px; }
+    .btn { padding: 8px 12px; border-radius:6px; border: none; cursor: pointer; }
+    .btn-primary { background: #0b76ff; color:white; }
+    .btn-secondary { background: #eee; color:#333; margin-left:8px; }
+    .legend { margin: 8px 0; font-size: 14px; }
+    .toast { position: fixed; right: 16px; bottom: 16px; background:#111; color:white; padding:8px 12px; border-radius:6px; opacity:0.95; }
+  </style>
+</head>
+<body>
+  <h1>Market Floorplan — Demo</h1>
+  <p>Click an empty table to reserve it for the selected slot.</p>
+
+  <div class="legend">
+    <span style="display:inline-block;width:16px;height:16px;background:#ffffff;border:2px solid #333;vertical-align:middle;margin-right:8px;"></span> Available
+    &nbsp;&nbsp;
+    <span style="display:inline-block;width:16px;height:16px;background:#ffdddd;border:2px solid #cc0000;vertical-align:middle;margin-right:8px;"></span> Reserved
+  </div>
+
+  <div class="floor-wrap">
+    <!-- Inline SVG: viewBox ensures responsive scaling -->
+    <svg viewBox="0 0 1200 800" id="floorplan" role="img" aria-label="Market floorplan">
+      <!-- Example background/aisle -->
+      <rect x="0" y="0" width="1200" height="800" fill="transparent"></rect>
+
+      <!-- Tables (rectangles and circles) - data-table-id attribute is essential -->
+      <!-- Table 1 -->
+      <g class="table-group" data-table-id="1">
+        <rect id="table-1" class="table" x="100" y="80" width="140" height="90" rx="8" data-table-id="1" />
+        <text class="label" x="170" y="135" text-anchor="middle">T1</text>
+      </g>
+
+      <!-- Table 2 -->
+      <g class="table-group" data-table-id="2">
+        <rect id="table-2" class="table" x="300" y="80" width="140" height="90" rx="8" data-table-id="2" />
+        <text class="label" x="370" y="135" text-anchor="middle">T2</text>
+      </g>
+
+      <!-- Circular table -->
+      <g class="table-group" data-table-id="3">
+        <circle id="table-3" class="table" cx="180" cy="280" r="48" data-table-id="3" />
+        <text class="label" x="180" y="285" text-anchor="middle">T3</text>
+      </g>
+
+      <!-- More tables -->
+      <g class="table-group" data-table-id="4">
+        <rect id="table-4" class="table" x="360" y="240" width="140" height="90" rx="8" data-table-id="4" />
+        <text class="label" x="430" y="295" text-anchor="middle">T4</text>
+      </g>
+
+      <!-- Admin/other shapes could be added -->
+    </svg>
+  </div>
+
+  <!-- Booking modal -->
+  <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal" role="document" aria-label="Reserve table">
+      <h3 id="modalTitle">Reserve table</h3>
+      <div id="modalBody">
+        <input id="vendorName" type="text" placeholder="Your vendor name" />
+        <input id="vendorContact" type="text" placeholder="Contact info (email/phone)" />
+      </div>
+      <div style="text-align:right;margin-top:8px;">
+        <button id="confirmBtn" class="btn btn-primary">Reserve</button>
+        <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+      </div>
+      <div id="modalMsg" style="margin-top:8px;color:#c33;display:none;"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" style="display:none;"></div>
+
+  <script>
+    // ---------- Demo: replace eventId via Django template or JS variable ----------
+    const EVENT_ID = 1;         // replace with dynamic if rendering
+    const SLOT_ID = 1;          // preselected slot id for simplicity
+
+    // ---------- Helper: get Django CSRF token from cookie ----------
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+    const CSRF_TOKEN = getCookie('csrftoken');
+
+    // ---------- Simple toast ----------
+    function showToast(msg, ms = 2500) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => t.style.display = 'none', ms);
+    }
+
+    // ---------- Fetch reservations and mark reserved tables ----------
+    async function loadReservations() {
+      // Replace this URL with your API route in Django
+      const url = `/api/events/${EVENT_ID}/layout/`;
+      try {
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error('Failed to fetch layout');
+        const json = await resp.json();
+        applyReservationsToSVG(json.reservations || []);
+      } catch (err) {
+        console.warn('Falling back to demo reservations', err);
+        // demo fallback
+        const demo = [{ table_id: 2, vendor_name: 'Demo Vendor', reservation_id: 101 }];
+        applyReservationsToSVG(demo);
+      }
+    }
+
+    function applyReservationsToSVG(reservations) {
+      // clear previous reserved
+      document.querySelectorAll('.table').forEach(el => {
+        el.classList.remove('reserved', 'selected');
+        el.removeAttribute('data-reservation-id');
+      });
+      reservations.forEach(r => {
+        const el = document.querySelector(`[data-table-id="${r.table_id}"]`);
+        if (el) {
+          el.classList.add('reserved');
+          el.setAttribute('data-reservation-id', r.reservation_id || '');
+          // add title for accessibility (shows as tooltip on many browsers)
+          let t = el.parentNode.querySelector('title');
+          if (!t) {
+            t = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+            el.parentNode.insertBefore(t, el);
+          }
+          t.textContent = `Reserved by ${r.vendor_name}`;
+        }
+      });
+    }
+
+    // ---------- Modal logic ----------
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const vendorNameInput = document.getElementById('vendorName');
+    const vendorContactInput = document.getElementById('vendorContact');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMsg = document.getElementById('modalMsg');
+
+    let currentTableId = null;
+
+    function openBookingModal(tableId) {
+      currentTableId = tableId;
+      modalTitle.textContent = `Reserve Table ${tableId}`;
+      vendorNameInput.value = '';
+      vendorContactInput.value = '';
+      modalMsg.style.display = 'none';
+      modalBackdrop.style.display = 'flex';
+      vendorNameInput.focus();
+    }
+
+    function closeModal() {
+      modalBackdrop.style.display = 'none';
+      currentTableId = null;
+    }
+
+    document.getElementById('cancelBtn').addEventListener('click', closeModal);
+
+    // ---------- Click handlers on tables ----------
+    document.querySelectorAll('.table').forEach(el => {
+      el.addEventListener('click', (e) => {
+        const tableId = el.getAttribute('data-table-id');
+        // If reserved, show info
+        if (el.classList.contains('reserved')) {
+          const t = el.parentNode.querySelector('title');
+          showToast(t ? t.textContent : 'Reserved');
+          return;
+        }
+        // else open the booking modal
+        openBookingModal(tableId);
+      });
+    });
+
+    // ---------- Confirm booking action (AJAX POST) ----------
+    document.getElementById('confirmBtn').addEventListener('click', async () => {
+      const name = vendorNameInput.value.trim();
+      const contact = vendorContactInput.value.trim();
+      if (!name) {
+        modalMsg.textContent = 'Please enter your vendor name.';
+        modalMsg.style.display = 'block';
+        return;
+      }
+      modalMsg.style.display = 'none';
+      // POST to your Django endpoint: replace URL to your API
+      const url = `/api/reservations/`;
+      const payload = {
+        slot: SLOT_ID,
+        table: parseInt(currentTableId, 10),
+        vendor_name: name,
+        vendor_contact: contact
+      };
+      try {
+        const resp = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF_TOKEN,
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (resp.status === 201) {
+          // success: update UI to reserved
+          showToast('Table reserved! 🎉');
+          const el = document.querySelector(`[data-table-id="${currentTableId}"]`);
+          if (el) el.classList.add('reserved');
+          closeModal();
+        } else if (resp.status === 409) {
+          // conflict: someone else reserved it
+          const data = await resp.json().catch(() => ({}));
+          modalMsg.textContent = data.detail || 'Table already reserved. Please choose another.';
+          modalMsg.style.display = 'block';
+          // refresh reservations to reflect latest state
+          loadReservations();
+        } else {
+          const data = await resp.json().catch(() => ({}));
+          modalMsg.textContent = data.detail || 'Failed to reserve. Try again.';
+          modalMsg.style.display = 'block';
+        }
+      } catch (err) {
+        modalMsg.textContent = 'Network error. Try again.';
+        modalMsg.style.display = 'block';
+        console.error(err);
+      }
+    });
+
+    // Kick off initial load
+    loadReservations();
+  </script>
+</body>
+</html>
