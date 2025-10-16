@@ -1,19 +1,45 @@
 {% extends "base.html" %}
 {% block main_content %}
-<h2>My Bookings</h2>
-<ul>
-    {% for booking in bookings %}
-    <li>
-        {{ booking.workspace.name }} on {{ booking.booking_date }} 
-        ({{ booking.start_time }} - {{ booking.end_time }}) - {{ booking.status }}
-        <a href="{% url 'update_booking' booking.id %}" class="btn btn-sm btn-warning">Edit</a>
-        <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-sm btn-danger">Delete</a>
-    </li>
-    {% empty %}
-    <li>No bookings found.</li>
-    <li>
-        <a href="{% url 'workspace_list' %}" class="btn btn-primary">Add a Booking</a>
-    </li>
-    {% endfor %}
-</ul>
+<div class="my-bookings-container">
+    <h2>My Bookings</h2>
+    
+    <!-- Upcoming Bookings Section -->
+    <section class="bookings-section">
+        <h3>Upcoming Bookings</h3>
+        {% if upcoming_bookings %}
+        <ul>
+            {% for booking in upcoming_bookings %}
+            <li class="booking-item upcoming">
+                <strong>{{ booking.workspace.name }}</strong> on {{ booking.booking_date }} 
+                ({{ booking.start_time }} - {{ booking.end_time }}) - {{ booking.status }}
+                <div>
+                    <a href="{% url 'update_booking' booking.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-sm btn-danger">Cancel</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No upcoming bookings.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Make a Booking</a>
+        {% endif %}
+    </section>
+    
+    <!-- Past Bookings Section -->
+    <section class="bookings-section">
+        <h3>Past Bookings</h3>
+        {% if past_bookings %}
+        <ul>
+            {% for booking in past_bookings %}
+            <li class="booking-item past">
+                <strong>{{ booking.workspace.name }}</strong> on {{ booking.booking_date }} 
+                ({{ booking.start_time }} - {{ booking.end_time }}) - {{ booking.status }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No past bookings.</p>
+        {% endif %}
+    </section>
+</div>
 {% endblock %}

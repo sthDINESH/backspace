@@ -229,5 +229,35 @@ def cancel_booking(request, booking_id):
 
 @login_required
 def my_bookings(request):
-    bookings = Booking.objects.filter(user=request.user)
-    return render(request, 'booking/my_bookings.html', {'bookings': bookings})
+    from django.utils import timezone
+    from datetime import datetime
+    
+    # Get current date and time
+    now = timezone.now()
+    today = now.date()
+    current_time = now.time()
+    
+    # Get all user bookings
+    all_bookings = Booking.objects.filter(user=request.user)
+    
+    # Separate into upcoming and past bookings
+    upcoming_bookings = []
+    past_bookings = []
+    
+    for booking in all_bookings:
+        # Check if booking is in the past
+        if booking.booking_date < today:
+            past_bookings.append(booking)
+        elif booking.booking_date == today and booking.end_time < current_time:
+            past_bookings.append(booking)
+        else:
+            upcoming_bookings.append(booking)
+    
+    # Sort bookings by date (newest first for past, soonest first for upcoming)
+    upcoming_bookings.sort(key=lambda x: (x.booking_date, x.start_time))
+    past_bookings.sort(key=lambda x: (x.booking_date, x.start_time), reverse=True)
+    
+    return render(request, 'booking/my_bookings.html', {
+        'upcoming_bookings': upcoming_bookings,
+        'past_bookings': past_bookings,
+    })
