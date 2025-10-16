@@ -8,23 +8,18 @@
 {% if user.is_authenticated %}
 <section>
 <h1>Hello, {{ user.username }}</h1>
-{% endif %}
 <h2>Backspace is live</h2>
-<form action="">
+<h3>Create a New Booking</h3>
+<form id="booking-form" method="post">
+{% csrf_token %}
 {% crispy booking_form %}
-<button type="submit" class="btn btn-primary">Submit</button>
+<button type="submit" class="btn btn-primary">Submit Booking</button>
 </form>
-
-<h2>User Bookings</h2>
-{% for booking in bookings %}
-<div>
-    {{ booking.workspace }}:{{ booking.date}} - {{ booking.start_time }}:{{booking.end_time }}
-    <button type="button" class="btn btn-primary" data-type="get-booking-info" data-booking-id="{{ booking.id }}">Update</button>
-    <a href="/booking/{{ booking.id }}/cancel" class="btn btn-danger">Cancel</a>
-</div>
-{% empty %}
-<div>No bookings for user.</div>
-{% endfor %}
-
 </section>
+{% else %}
+<section>
+<h2>Backspace is live</h2>
+<p>Please <a href="{% url 'account_login' %}">login</a> to make a booking.</p>
+</section>
+{% endif %}
 {% endblock main_content %}
