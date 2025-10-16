@@ -56,4 +56,59 @@ def booking_list(request):
     return render(request, 'booking/booking_list.html', context)
 
 
+# ==================== CREATE BOOKING (CREATE) ====================
+
+@login_required
+def booking_create(request):
+    """
+    Create a new booking.
+    
+    US-006: Create New Booking (Epic 3 - CREATE)
+    LO2.2: CRUD Functionality
+    LO2.4: Forms and Validation
+    """
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.user = request.user
+            booking.status = 'confirmed'
+            
+            try:
+                booking.save()
+                messages.success(
+                    request,
+                    f'Booking created successfully! {booking.study_space.name} on {booking.booking_date} from {booking.start_time.strftime("%H:%M")} to {booking.end_time.strftime("%H:%M")}.'
+                )
+                return redirect('booking_list')
+            except Exception as e:
+                messages.error(request, f'Error creating booking: {str(e)}')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        study_space_id = request.GET.get('study_space')
+        initial_data = {}
+        
+        if study_space_id:
+            try:
+                study_space = StudySpace.objects.get(pk=study_space_id)
+                initial_data['study_space'] = study_space
+            except StudySpace.DoesNotExist:
+                pass
+        
+        form = BookingForm(initial=initial_data)
+    
+    available_spaces = StudySpace.objects.filter(status='available')
+    
+    context = {
+        'form': form,
+        'available_spaces': available_spaces,
+        'page_title': 'Create New Booking',
+    }
+    
+    return render(request, 'booking/booking_form.html', context)
+
+
+
+
 
