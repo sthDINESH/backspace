@@ -1,13 +1,18 @@
-from django.db import models
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.utils import timezone
+from django.db.models import Q
+from .models import Booking, StudySpace
+from .forms import BookingForm
 
-# Create your models here.
 
-# workspace model
-class WorkSpace(models.Model):
-    name = models.CharField(max_length=100)
-    location = models.CharField(max_length=255)
-    capacity = models.PositiveIntegerField()
-    # Add more fields as needed, e.g., shape, coordinates for SVG, etc.
+# ==================== EXISTING HOME VIEW ====================
 
-    def __str__(self):
-        return self.name
+def home(request):
+    """Homepage view - with the existing code."""
+    return render(
+        request=request,
+        template_name="booking/home.html",
+    )
+
