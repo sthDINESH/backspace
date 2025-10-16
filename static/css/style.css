@@ -1,3 +1,7 @@
 body {
     background-color: coral;
 }
+
+.workspace.reserved {
+    fill:red;
+}
