@@ -9,10 +9,15 @@ def home(request):
     
     booking_form = BookingForm()
 
+    bookings = Booking.objects.filter(
+        user=request.user,
+    )
+
     return render(
         request=request,
         context={
-            "booking_form":booking_form,
+            "booking_form": booking_form,
+            "bookings": bookings,
         },
         template_name="booking/home.html",
     )
@@ -79,3 +84,34 @@ def update_booking(request, booking_id):
                 },
                 status=405
             )
+
+
+@login_required
+def cancel_booking(request, booking_id):
+    """
+    Update an existing booking related to :model:`Booking`
+    Supports requests
+    Return JSON response
+    """
+    try:
+        booking = Booking.objects.get(
+            pk=booking_id,
+            user=request.user,
+        )
+
+        booking.delete()
+        return JsonResponse({
+                'success': True,
+                'message': 'Booking cancelled.'
+            })
+    except Exception as e:
+        return JsonResponse(
+            {
+                'success': False,
+                'message': f'Error: {str(e)}'
+            },
+            status=500
+        )
+
+    pass
+    
