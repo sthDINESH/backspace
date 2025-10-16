@@ -59,21 +59,26 @@ def home(request):
 
     workspaces = WorkSpace.objects.all()
 
-    user_editable_workspaces = WorkSpace.objects.filter(
-        bookings__user=request.user,
-        bookings__booking_date=date,
-        bookings__start_time__lt=end_time,
-        bookings__end_time__gt=start_time,
-    ).distinct()
+    # Only fetch user-specific data if user is authenticated
+    if request.user.is_authenticated:
+        user_editable_workspaces = WorkSpace.objects.filter(
+            bookings__user=request.user,
+            bookings__booking_date=date,
+            bookings__start_time__lt=end_time,
+            bookings__end_time__gt=start_time,
+        ).distinct()
 
-    user_bookings = Booking.objects.filter(
-        user=request.user,
-        workspace__in=[ws.id for ws in workspaces],
-        booking_date=date,
-        start_time__lt=end_time,
-        end_time__gt=start_time,
-    )
-    workspace_to_user_booking_id = {b.workspace_id: b.id for b in user_bookings}
+        user_bookings = Booking.objects.filter(
+            user=request.user,
+            workspace__in=[ws.id for ws in workspaces],
+            booking_date=date,
+            start_time__lt=end_time,
+            end_time__gt=start_time,
+        )
+        workspace_to_user_booking_id = {b.workspace_id: b.id for b in user_bookings}
+    else:
+        user_editable_workspaces = WorkSpace.objects.none()
+        workspace_to_user_booking_id = {}
 
     return render(
         request=request,
