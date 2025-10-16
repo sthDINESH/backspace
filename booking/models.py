@@ -186,10 +186,48 @@ def booking_delete(request, pk):
     return render(request, 'booking/booking_confirm_delete.html', context)
 
 
+# ==================== STUDY SPACE VIEWS ====================
+
+@login_required
+def study_space_list(request):
+    """
+    Display all available study spaces.
+    """
+    workspace_type = request.GET.get('type', '')
+    
+    spaces = StudySpace.objects.filter(status='available')
+    
+    if workspace_type:
+        spaces = spaces.filter(workspace_type=workspace_type)
+    
+    workspace_types = StudySpace.WORKSPACE_TYPES
+    
+    context = {
+        'study_spaces': spaces,
+        'workspace_types': workspace_types,
+        'selected_type': workspace_type,
+    }
+    
+    return render(request, 'booking/study_space_list.html', context)
 
 
-
-
+@login_required
+def floor_plan(request):
+    """
+    Display the interactive SVG floor plan.
+    
+    US-004: View Interactive Floor Plan
+    US-005: Select Workspace Area
+    """
+    study_spaces = StudySpace.objects.all()
+    selected_date = request.GET.get('date', timezone.now().date().isoformat())
+    
+    context = {
+        'study_spaces': study_spaces,
+        'selected_date': selected_date,
+    }
+    
+    return render(request, 'booking/floor_plan.html', context)
 
 
 
