@@ -24,9 +24,6 @@ def booking_list(request):
     """
     Display all bookings for the logged-in user.
     Separates upcoming and past bookings.
-    
-    US-007: View My Bookings (Epic 3 - READ)
-    LO2.2: CRUD Functionality
     """
     now = timezone.now()
     today = now.date()
@@ -62,10 +59,6 @@ def booking_list(request):
 def booking_create(request):
     """
     Create a new booking.
-    
-    US-006: Create New Booking (Epic 3 - CREATE)
-    LO2.2: CRUD Functionality
-    LO2.4: Forms and Validation
     """
     if request.method == 'POST':
         form = BookingForm(request.POST)
@@ -109,6 +102,59 @@ def booking_create(request):
     return render(request, 'booking/booking_form.html', context)
 
 
+# ==================== BOOKING DETAIL VIEW (READ) ====================
 
+@login_required
+def booking_detail(request, pk):
+    """
+    Display details of a specific booking.
+    """
+    booking = get_object_or_404(Booking, pk=pk, user=request.user)
+    
+    context = {
+        'booking': booking,
+    }
+    
+    return render(request, 'booking/booking_detail.html', context)
+
+
+# ==================== UPDATE BOOKING (UPDATE) ====================
+
+@login_required
+def booking_edit(request, pk):
+    """
+    Edit an existing booking.
+    """
+    booking = get_object_or_404(Booking, pk=pk, user=request.user)
+    
+    if not booking.can_be_modified():
+        messages.error(request, 'This booking cannot be modified (it may be in the past or cancelled).')
+        return redirect('booking_list')
+    
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            try:
+                updated_booking = form.save()
+                messages.success(
+                    request,
+                    f'Booking updated successfully! {updated_booking.study_space.name} on {updated_booking.booking_date}.'
+                )
+                return redirect('booking_detail', pk=updated_booking.pk)
+            except Exception as e:
+                messages.error(request, f'Error updating booking: {str(e)}')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = BookingForm(instance=booking)
+    
+    context = {
+        'form': form,
+        'booking': booking,
+        'page_title': 'Edit Booking',
+        'is_edit': True,
+    }
+    
+    return render(request, 'booking/booking_form.html', context)
 
 
