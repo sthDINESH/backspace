@@ -3,4 +3,8 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return HttpResponse("<h1>Backspace is live </h1>")
+
+    return render(
+        request=request,
+        template_name="booking/home.html",
+    )

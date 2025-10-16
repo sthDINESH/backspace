@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block main_content %}
+{% if user.is_authenticated %}
+<h1>Hello, {{ user.username }}</h1>
+{% endif %}
+<h2>Backspace is live</h2>
+{% endblock main_content %}
