@@ -27,6 +27,53 @@ def workspace_list(request):
 
 
 @login_required
+def create_booking(request):
+    """
+    Create a new booking related to :model:`Booking`
+    Supports AJAX POST requests
+    Return JSON response
+    """
+    if request.method == "POST":
+        try:
+            booking_form = BookingForm(data=request.POST)
+
+            if booking_form.is_valid():
+                booking = booking_form.save(commit=False)
+                booking.user = request.user
+                booking.status = "confirmed"
+                booking.save()
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Booking created successfully.'
+                })
+            else:
+                return JsonResponse(
+                    {
+                        'success': False,
+                        'message': 'Errors in submitted booking form',
+                        'errors': booking_form.errors
+                    },
+                    status=400
+                )
+        except Exception as e:
+            return JsonResponse(
+                {
+                    'success': False,
+                    'message': f'Error: {str(e)}'
+                },
+                status=500
+            )
+    else:
+        return JsonResponse(
+            {
+                'success': False,
+                'message': 'Unsupported request method.'
+            },
+            status=405
+        )
+
+
+@login_required
 def update_booking(request, booking_id):
     """
     Update an existing booking related to :model:`Booking`
