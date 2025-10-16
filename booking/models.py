@@ -186,48 +186,30 @@ def booking_delete(request, pk):
     return render(request, 'booking/booking_confirm_delete.html', context)
 
 
-# ==================== STUDY SPACE VIEWS ====================
+# ==================== NEW: DASHBOARD VIEW ====================
 
 @login_required
-def study_space_list(request):
-    """
-    Display all available study spaces.
-    """
-    workspace_type = request.GET.get('type', '')
+def dashboard(request):
+    """User dashboard showing booking summary."""
+    now = timezone.now()
+    today = now.date()
     
-    spaces = StudySpace.objects.filter(status='available')
+    upcoming_bookings = Booking.objects.filter(
+        user=request.user,
+        booking_date__gte=today,
+        status__in=['pending', 'confirmed']
+    ).order_by('booking_date', 'start_time')[:5]
     
-    if workspace_type:
-        spaces = spaces.filter(workspace_type=workspace_type)
-    
-    workspace_types = StudySpace.WORKSPACE_TYPES
-    
-    context = {
-        'study_spaces': spaces,
-        'workspace_types': workspace_types,
-        'selected_type': workspace_type,
-    }
-    
-    return render(request, 'booking/study_space_list.html', context)
-
-
-@login_required
-def floor_plan(request):
-    """
-    Display the interactive SVG floor plan.
-    
-    US-004: View Interactive Floor Plan
-    US-005: Select Workspace Area
-    """
-    study_spaces = StudySpace.objects.all()
-    selected_date = request.GET.get('date', timezone.now().date().isoformat())
+    total_bookings = Booking.objects.filter(user=request.user).count()
+    active_bookings = upcoming_bookings.count()
     
     context = {
-        'study_spaces': study_spaces,
-        'selected_date': selected_date,
+        'upcoming_bookings': upcoming_bookings,
+        'total_bookings': total_bookings,
+        'active_bookings': active_bookings,
     }
     
-    return render(request, 'booking/floor_plan.html', context)
+    return render(request, 'booking/dashboard.html', context)
 
 
 
