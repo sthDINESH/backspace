@@ -17,6 +17,45 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ home_url }}">
+                <img src="" alt="Website logo">
+                Backspace
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item px-1">
+                        <a class="nav-link {% if request.path == home_url %} active {% endif %}" {% if request.path == home_url %}aria-current='page'{% endif %} href="{{ home_url }}">Home</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle user-profile ms-lg-5" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user"></i>
+                            {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ logout_url }}">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item px-1">
+                        <a class="nav-link {% if request.path == login_url %} active {% endif %}" {% if request.path == login_url %}aria-current='page'{% endif %} href="{{ login_url }}">Login</a>
+                    </li>
+                    <li class="nav-item px-1">
+                        <a class="nav-link {% if request.path == signup_url %} active {% endif %}" {% if request.path == signup_url %}aria-current='page'{% endif %} href="{{ signup_url }}">SignUp</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
     <header>
         <!-- displaying Django messages -->
         <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100">
