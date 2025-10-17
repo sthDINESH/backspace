@@ -242,6 +242,11 @@ def cancel_booking(request, booking_id):
             messages.ERROR,
             f"Error cancelling booking - {e}"
         )
+
+    # AJAX support
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        return JsonResponse({"success": True, "message": "Complete"})
+
     if request.GET.get('from') == 'workspace':
         return redirect('book_workspace')
     else:
