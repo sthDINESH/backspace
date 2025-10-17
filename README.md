@@ -475,14 +475,6 @@ The following accessibility features have been implemented:
 
 ## Testing
 
-### Manual Testing
-
-
-
-### Automated Testing
-
-
-
 ### Code Validation
 
 #### CSS
@@ -513,9 +505,37 @@ Desktop
 
 ### Fixed Bugs
 
+1. **JavaScript Issues in My Bookings Page** 
+   - **Issue:** Missing CSRF token in edit booking modal causing security validation failures
+   - **Issue:** Cancel booking function not properly handling AJAX requests
+   - **Solution:** Added `{% csrf_token %}` to the modal, implemented AJAX support in `cancel_booking` view with JSON response handling
+   - **Commit:** `5fac50c`
+
+2. **Edit Booking Modal Not Displaying** )
+   - **Issue:** Edit booking modal fields were not loading correctly
+   - **Solution:** Refactored modal loading logic, added proper form rendering in `edit_booking_form.html`, updated URL routing
+   - **Commit:** `ffe511c`
+
+3. **File Naming Case Sensitivity Issue** 
+   - **Issue:** Template file named `Interactive_floorplan.html` with capital "I" causing inconsistency and potential deployment issues
+   - **Solution:** Renamed file to `interactive_floorplan.html` (lowercase) for consistency with Django naming conventions
+   - **Commit:** `3215831`
+
+4. **Python and JavaScript Lint Errors** 
+   - **Issue:** Multiple linting issues across Python files (models.py, views.py, forms.py, urls.py, admin.py)
+   - **Issue:** JavaScript linting warnings in script.js
+   - **Solution:** Cleaned up code formatting, fixed line length violations, added proper docstrings, corrected import statements
+   - **Commit:** `80670ce`
+
+5. **Booking Validation Logic** (Fixed: Development phase)
+   - **Issue:** Users could potentially book workspaces outside business hours or create overlapping bookings
+   - **Solution:** Implemented comprehensive validation in `Booking.clean()` method:
+     - Prevents bookings for past dates
+     - Restricts bookings to business hours (8 AM - 10 PM)
+     - Checks for overlapping bookings on the same workspace
+   - **Files:** `booking/models.py`
 
 
-### Known Bugs
 
 
 ## Deployment
