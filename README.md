@@ -2,9 +2,9 @@
 
 backSPACE is a Django-based workspace booking system that allows users to book desks, meeting rooms, and collaboration spaces in real-time. The application features an interactive SVG floor plan, CRUD operations for managing bookings, and an admin panel for workspace management.
 
-![Am I Responsive Image](add-screenshot-here)
+![Am I Responsive Image](static/assets/images/amiresponsive.png)
 
-[View Live Site](https://your-app.herokuapp.com) | [View GitHub Repository](https://github.com/sthDINESH/backspace)
+[View Live Site](https://backspace-c8042b918673.herokuapp.com/) | [View GitHub Repository](https://github.com/sthDINESH/backspace)
 
 ---
 
@@ -51,11 +51,71 @@ backSPACE is a Django-based workspace booking system that allows users to book d
 ## Design & Planning
 
 ### User Experience (UX)
+The backSPACE booking system was designed with user convenience in mind. The application provides an intuitive interface for browsing available workspaces, making bookings, and managing reservations. The interactive floor plan allows users to visually select their preferred workspace, making the booking process straightforward and engaging.
+
+**Target Audience:**
+- Students and professionals needing workspaces
+- Teams requiring meeting rooms
+- Individuals seeking quiet study spaces
+
+**User Goals:**
+- Quickly find and book available workspaces
+- View all personal bookings in one place
+- Easily modify or cancel existing bookings
+- See real-time workspace availability
 
 
 
 ### User Stories
+User stories were created and tracked using GitHub Projects with MoSCoW prioritisation (Must Have, Should Have, Could Have, Won't Have) following Agile methodology.
 
+#### Must Have (Critical - MVP Features)
+
+**Epic 1: User Authentication & Authorisation**
+- **US-001:** As a new visitor, I want to create an account with my email and password so that I can book workspace areas and manage my bookings
+- **US-002:** As a registered user, I want to log in to my account so that I can access my bookings and make new reservations
+- **US-003:** As a logged-in user, I want to log out of my account so that I can secure my account when using shared devices
+
+**Epic 2: Workspace Visualisation & Selection**
+- **US-004:** As a user, I want to see an interactive SVG floor plan of the workspace so that I can visually identify and select available spaces
+- **US-005:** As a user, I want to click on an available space in the floor plan so that I can proceed to book it
+
+**Epic 3: Booking Management (CRUD)**
+- **US-006:** As a logged-in user, I want to book a selected workspace for a specific date and time so that I can reserve my workspace in advance
+- **US-007:** As a logged-in user, I want to see a list of all my current and past bookings so that I can keep track of my workspace reservations
+- **US-008:** As a logged-in user, I want to modify my existing booking (date, time, or workspace) so that I can adjust my plans if they change
+- **US-009:** As a logged-in user, I want to cancel my booking so that I can free up the workspace if I no longer need it
+
+**Epic 4: Core Data Models**
+- **US-010:** As a developer, I want to design and implement a robust database schema so that the application can efficiently store and retrieve booking data
+
+**Epic 5: Admin Panel**
+- **US-011:** As an administrator, I want to add, edit, and remove workspace areas so that I can keep the floor plan up to date
+- **US-012:** As an administrator, I want to view, edit, and cancel any user booking so that I can manage the workspace effectively
+
+#### Should Have (Important but not Critical)
+
+**Epic 6: Enhanced User Experience**
+- **US-013:** As a user, I want to see real-time updates of workspace availability so that I don't attempt to book already-reserved spaces
+- **US-014:** As a user, I want to know the deadline for modifying bookings so that I can plan accordingly
+- **US-015:** As a user, I want to receive notifications when I create, edit, or cancel bookings so that I have confirmation of my actions
+- **US-016:** As a user, I want to filter workspaces by type (desk, meeting room, booth) so that I can quickly find the right space for my needs
+- **US-017:** As a logged-in user, I want to view and edit my profile information so that I can keep my details up to date
+
+#### Could Have (Desirable)
+- **US-018:** As a user, I want to view my complete booking history with pagination so that I can review past workspace usage
+- **US-019:** As a user, I want to see amenities available at each workspace (WiFi, monitor, whiteboard) so that I can choose spaces that meet my needs
+- **US-020:** As an administrator, I want to set minimum and maximum booking durations so that workspaces are used fairly
+- **US-021:** As a user, I want to create recurring bookings (daily, weekly) so that I don't have to book the same space repeatedly
+
+#### Won't Have (Future Considerations)
+- **US-022:** Email notifications - Email confirmations and reminders for bookings
+- **US-023:** Calendar Integration - Export bookings to Google Calendar/Outlook
+- **US-024:** Payment Integration - Paid workspace bookings with Stripe
+- **US-025:** Mobile App - Native iOS/Android application
+- **US-026:** QR Code Check-in - QR codes for workspace check-in verification
+
+[View Complete User Stories on GitHub Projects](https://github.com/users/sthDINESH/projects/10)
 
 
 ### Wireframes
