@@ -1,7 +1,18 @@
 from django import forms
 from .models import Booking
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field
+from crispy_forms.layout import Layout, Field, Div
+from datetime import time
+
+def business_hour_choices():
+    # Generates choices from 08:00 to 22:00 in 30-minute increments
+    choices = []
+    for hour in range(8, 22 + 1):
+        for minute in (0, 30):
+            t = time(hour, minute)
+            label = t.strftime('%H:%M')
+            choices.append((label, label))
+    return choices
 
 
 class BookingForm(forms.ModelForm):
@@ -33,3 +44,40 @@ class BookingForm(forms.ModelForm):
             'purpose',
             'notes',
         )
+        widgets = {
+            'workspace': forms.HiddenInput(),
+            'booking_date': forms.HiddenInput(),
+            'start_time': forms.HiddenInput(),
+            'end_time': forms.HiddenInput(),
+        }
+
+
+class CheckBookingsForm(forms.Form):
+    """
+    Form to check existing reservations
+    """
+    date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'})
+    )
+    start_time = forms.ChoiceField(
+        choices=business_hour_choices(),
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    end_time = forms.ChoiceField(
+        choices=business_hour_choices(),
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Div(
+                Field('date'),
+                Field('start_time'),
+                Field('end_time'),
+                css_class='d-flex gap-2 align-items-end'
+            )
+        )
+
