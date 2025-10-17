@@ -580,17 +580,58 @@ Please note that when deploying manually you will have to deploy after each chan
 
 
 #### Local Setup
+Once you've cloned the repository, follow these steps to set up the project locally:
 
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+# On Windows:
+.venv\Scripts\activate
+# On Mac/Linux:
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create env.py file in the root directory with:
+import os
+os.environ.setdefault("SECRET_KEY", "your-secret-key-here")
+os.environ.setdefault("DATABASE_URL", "sqlite:///db.sqlite3")
+os.environ.setdefault("DEBUG", "True")
+
+# Run migrations
+python manage.py migrate
+
+# Load workspace fixtures (optional)
+python manage.py loaddata workspace_fixture.json
+
+# Create superuser for admin access
+python manage.py createsuperuser
+
+# Collect static files
+python manage.py collectstatic
+
+# Run development server
+python manage.py runserver
+```
+
+The application will be available at `http://127.0.0.1:8000/`
 
 
 ## Credits
 
 ### Code Used
-
+- Django documentation for framework implementation
+- Bootstrap 5 documentation for responsive design components
+- Django Allauth documentation for authentication system
 
 
 ### Content
-
+- All written content created by the development team
+- User stories developed following Agile methodology
+- Database schema designed collaboratively by the team
 
 
 ### AI Usage
@@ -602,6 +643,18 @@ AI tools were used strategically to assist development:
 - Workflow: Improved team efficiency by clarifying tasks and speeding up problem-solving.
 - 
 We used AI as a collaborative assistant, not as a replacement for our coding. Every team member actively contributed to code, testing, and merging.
+This project strategically utilised AI tools to enhance development efficiency and code quality:
+
+**Claude AI (Anthropic) - Code Generation & Debugging:**
+- **Epic 3 & 4 Implementation:** Generated core CRUD operations and database models with built-in validation logic, saving significant development time while ensuring best practices
+- **Debugging Assistance:** Resolved template syntax errors and form validation issues through AI-guided troubleshooting
+- **Git Workflow:** Provided guidance on branch management and merge conflict resolution
+
+**GitHub Copilot - Unit Testing & Code Completion:**
+- Assisted in writing docstrings and inline documentation
+
+
+All AI-generated code was thoroughly reviewed, tested, and modified as needed to ensure functionality, security, and alignment with project requirements.
 
 
 ### Media
@@ -624,8 +677,19 @@ We used AI as a collaborative assistant, not as a replacement for our coding. Ev
 - https://github.com/CXBeale - Christian
   
 - https://github.com/Gilberto2025123 - Gilberto
+- **Code Institute** - For project guidelines and learning materials
+- **Our Facilitator Marko** - For guidance and feedback throughout the project
+- **Our Mentor Mark** - For project advice and help with git version control
+- **Team Members** - For collaboration on shared components
+- **Django Community** - For excellent documentation and support
 
+https://github.com/sthDINESH
 
+https://github.com/sooiee
+
+https://github.com/CXBeale
+
+https://github.com/Gilberto2025123
 
 
 
