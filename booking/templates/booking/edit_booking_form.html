@@ -1,2 +1,39 @@
 {% csrf_token %}
-{{ form.as_p }}
+
+{# non-field errors #}
+<div id="form-non-field-errors" class="text-danger mb-2">
+  {{ form.non_field_errors }}
+</div>
+
+{# hidden workspace id - keep as hidden so update view still receives it #}
+{{ form.workspace }}
+
+<div class="mb-3">
+  <label for="{{ form.booking_date.id_for_label }}" class="form-label">Date</label>
+  {{ form.booking_date }}
+  <div class="invalid-feedback d-block" id="error_booking_date"></div>
+</div>
+
+<div class="mb-3">
+  <label for="{{ form.start_time.id_for_label }}" class="form-label">Start time</label>
+  {{ form.start_time }}
+  <div class="invalid-feedback d-block" id="error_start_time"></div>
+</div>
+
+<div class="mb-3">
+  <label for="{{ form.end_time.id_for_label }}" class="form-label">End time</label>
+  {{ form.end_time }}
+  <div class="invalid-feedback d-block" id="error_end_time"></div>
+</div>
+
+<div class="mb-3">
+  <label for="{{ form.purpose.id_for_label }}" class="form-label">Purpose</label>
+  {{ form.purpose }}
+  <div class="invalid-feedback d-block" id="error_purpose"></div>
+</div>
+
+<div class="mb-3">
+  <label for="{{ form.notes.id_for_label }}" class="form-label">Notes</label>
+  {{ form.notes }}
+  <div class="invalid-feedback d-block" id="error_notes"></div>
+</div>
