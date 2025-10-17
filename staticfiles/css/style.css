@@ -3,12 +3,12 @@
 
 /* CSS Colour Palette Styles */
 :root {
-  --primary-background: uranian-blue  #b5e2faff;
-  --primary-button: moonstone #0fa3b1ff; 
-  --primary-text: atomic-tangerine  #f7a072ff;
-  --secondary-button:baby-powder  #f9f7f3ff; 
-  --secondary-text-color: vanilla  #eddea4ff;
-  --highlight-color: tiffany-blue  #a6d8d4ff;
+  --primary-background: uranian-blue #b5e2faff;
+  --primary-button: moonstone #0fa3b1ff;
+  --primary-text: atomic-tangerine #f7a072ff;
+  --secondary-button: baby-powder #f9f7f3ff;
+  --secondary-text-color: vanilla #eddea4ff;
+  --highlight-color: tiffany-blue #a6d8d4ff;
 
   --primary-font: Zain, sans-serif;
   --secondary-font: Molengo, sans-serif;
@@ -16,26 +16,27 @@
 
 
 .navbar {
-    background-color: var(--primary-background);
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-  
-h1 { font-family: var(--primary-font);
+  background-color: var(--primary-background);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-family: var(--primary-font);
   font-size: 2.5em;
   color: var(--primary-text);
 }
 
-h2{
+h2 {
   font-family: var(--primary-font), sans-serif;
   font-size: 2.5em;
   color: var(--secondary-button);
 }
 
-h3{
+h3 {
   font-family: var(--primary-font), sans-serif;
   font-size: 2.5em;
   color: var(--secondary-button);
@@ -53,32 +54,68 @@ p {
   color: var(--primary-text);
 }
 
-body{
+body {
   font-family: var(--secondary-font), sans-serif;
   line-height: 1.6;
   margin: 0;
   padding: 0;
   background-color: var(--primary-text);
-  padding-top: 76px; /* Account for fixed navbar height */
+  padding-top: 76px;
+  /* Account for fixed navbar height */
 }
 
-body, p, h4 {
-  font-family: var(--secondary-font) !important;  /* Ensure consistency across body, paragraphs, and h4 */
-  
+body,
+p,
+h4 {
+  font-family: var(--secondary-font) !important;
+  /* Ensure consistency across body, paragraphs, and h4 */
+
 }
 
 .btn-signup,
 .btn-edit {
-    background-color: #188181;
-    color: #fff;
+  background-color: #188181;
+  color: #fff;
 }
 
 .btn-signup:hover,
 .btn-signup:active {
-    background-color: #fff;
-    color: var(--secondary-button);
+  background-color: #fff;
+  color: var(--secondary-button);
+}
+
+/* Workspace page styling */
+.workspace {
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), fill 0.18s cubic-bezier(0.4, 0, 0.2, 1), filter 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  fill: rgba(247, 160, 114, 0.5);
+  /* fill: green; */
+}
+
+.workspace:hover {
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.12));
+  fill: #ffe082;
 }
 
 .workspace.reserved {
-    fill:red;
+  fill: rgba(0, 0, 0, 0.12);
+}
+
+.workspace.reserved.editable:hover {
+  fill: #ffe082; 
+}
+
+#book-workspace-page {
+  min-height: 70vh;
+}
+
+#floor-plan {
+  width: 100%;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+#floor-plan svg {
+  width: 100%;
+  height: 100%;
 }
