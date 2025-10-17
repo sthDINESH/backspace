@@ -202,3 +202,24 @@ p {
 
 }
 
+/* Add these styles to improve My Bookings layout */
+.booking-card {
+  border-radius: 0.75rem;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.booking-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(15, 15, 15, 0.12);
+}
+
+/* Ensure cards stretch equally in a row */
+.booking-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* small utility for button spacing on very small screens */
+@media (max-width: 576px) {
+  .booking-card .btn { font-size: 0.9rem; }
+}
+
