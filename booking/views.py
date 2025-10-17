@@ -181,13 +181,22 @@ def update_booking(request, booking_id):
                     'message': 'Booking updated.'
                 })
             else:
+                # log errors for debugging
+                print("BookingForm errors:", booking_form.errors)  
+
+                json_errors = {}
+                for field, err_list in booking_form.errors.get_json_data().items():
+                    json_errors[field] = [e.get('message') for e in err_list]
+
+                # return structured errors to the client for display
                 return JsonResponse(
                     {
                         'success': False,
-                        'message': (
-                            'Not updated - Errors in submitted booking form'
-                        )
-                    }
+                        'message': 'Not updated - Errors in submitted booking form',
+                        'errors': json_errors,
+                        'non_field_errors': list(booking_form.non_field_errors()),
+                    },
+                    status=400
                 )
         except Exception as e:
             return JsonResponse(

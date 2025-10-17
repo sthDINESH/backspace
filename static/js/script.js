@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Hello from JS");
 });
@@ -173,4 +172,35 @@ function cancelBooking(bookingId) {
       });
     });
 ;
-    
+
+function showFormErrors(errors, nonFieldErrors) {
+    // clear old errors
+    ['booking_date','start_time','end_time','purpose','notes'].forEach(function(name){
+        const errEl = document.getElementById(`error_${name}`);
+        if (errEl) errEl.textContent = '';
+        const input = document.getElementById(`id_${name}`);
+        if (input) input.classList.remove('is-invalid');
+    });
+    const nonField = document.getElementById('form-non-field-errors');
+    if (nonField) nonField.textContent = '';
+
+    // set new field errors
+    if (errors) {
+        Object.entries(errors).forEach(([field, msgs]) => {
+            const errEl = document.getElementById(`error_${field}`);
+            if (errEl) errEl.textContent = Array.isArray(msgs) ? msgs.join(' ') : msgs;
+            const input = document.getElementById(`id_${field}`);
+            if (input) input.classList.add('is-invalid');
+        });
+    }
+
+    // non-field errors
+    if (nonFieldErrors && nonField) {
+        nonField.textContent = Array.isArray(nonFieldErrors) ? nonFieldErrors.join(' ') : nonFieldErrors;
+    }
+}
+
+// example usage inside your fetch POST response handler
+// .then(response => response.json()).then(data => {
+    // if (data.success) { ... } else { showFormErrors(data.errors || {}, data.non_field_errors) }
+// });
