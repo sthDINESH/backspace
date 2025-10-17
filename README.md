@@ -384,7 +384,21 @@ The following features are planned for future releases:
 
 
 ### Accessibility
+The following accessibility features have been implemented:
 
+- **Semantic HTML:** Proper use of HTML5 semantic elements including `<nav>`, `<main>`, `<header>`, and `<footer>`
+- **ARIA Labels:** Limited ARIA support implemented:
+  - `aria-label="Toggle navigation"` on mobile menu button
+  - `aria-label="Close"` on modal close buttons
+  - `aria-current="page"` on active navigation links
+  - `aria-live` and `aria-atomic` on toast messages
+- **Keyboard Navigation:** Bootstrap default keyboard accessibility for navigation, forms, and modals
+- **Form Labels:** All form inputs have proper `<label>` tags with `for` attributes linking to input IDs
+- **Alt Text:** Descriptive alternative text provided for images (logo, hero image)
+- **Responsive Design:** Mobile-first Bootstrap responsive design accessible on all device sizes
+- **Django Crispy Forms:** Form rendering with built-in accessibility features
+
+---git
 
 
 ## Technologies Used
