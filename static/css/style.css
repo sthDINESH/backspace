@@ -1,3 +1,80 @@
-body {
-    background-color: coral;
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Molengo&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+
+/* CSS Colour Palette Styles */
+:root {
+  --primary-background: uranian-blue  #b5e2faff;
+  --primary-button: moonstone #0fa3b1ff; 
+  --primary-text: atomic-tangerine  #f7a072ff;
+  --secondary-button:baby-powder  #f9f7f3ff; 
+  --secondary-text-color: vanilla  #eddea4ff;
+  --highlight-color: tiffany-blue  #a6d8d4ff;
+
+  --primary-font: Zain, sans-serif;
+  --secondary-font: Molengo, sans-serif;
+}
+
+
+.navbar {
+    background-color: var(--primary-background);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  
+h1 { font-family: var(--primary-font);
+  font-size: 2.5em;
+  color: var(--primary-text);
+}
+
+h2{
+  font-family: var(--primary-font), sans-serif;
+  font-size: 2.5em;
+  color: var(--secondary-button);
+}
+
+h3{
+  font-family: var(--primary-font), sans-serif;
+  font-size: 2.5em;
+  color: var(--secondary-button);
+}
+
+h4 {
+  font-family: var(--secondary-font), sans-serif;
+  font-size: 2.5em;
+  color: var(--secondary-button);
+}
+
+p {
+  font-family: var(--secondary-font), sans-serif;
+  font-size: 1.1em;
+  color: var(--primary-text);
+}
+
+body{
+  font-family: var(--secondary-font), sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: var(--primary-text);
+  padding-top: 76px; /* Account for fixed navbar height */
+}
+
+body, p, h4 {
+  font-family: var(--secondary-font) !important;  /* Ensure consistency across body, paragraphs, and h4 */
+  
+}
+
+.btn-signup,
+.btn-edit {
+    background-color: #188181;
+    color: #fff;
+}
+
+.btn-signup:hover,
+.btn-signup:active {
+    background-color: #fff;
+    color: var(--secondary-button);
 }

@@ -5,6 +5,11 @@
 {% load crispy_forms_tags %}
 
 {% block main_content %}
+   <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+    <img src="{% static 'assets/images/Hero Image.jpg' %}" alt="Woman working on laptop"
+            class="img-fluid hero-image" style="width:100%; height: auto;">
+    </section>
 {% if user.is_authenticated %}
 <section>
 <h1>Hello, {{ user.username }}</h1>
@@ -12,14 +17,14 @@
 <h2>Backspace is live</h2>
 <form action="">
 {% crispy booking_form %}
-<button type="submit" class="btn btn-primary">Submit</button>
+<button type="submit" class="btn-signup">Submit</button>
 </form>
 
 <h2>User Bookings</h2>
 {% for booking in bookings %}
 <div>
     {{ booking.workspace }}:{{ booking.date}} - {{ booking.start_time }}:{{booking.end_time }}
-    <button type="button" class="btn btn-primary" data-type="get-booking-info" data-booking-id="{{ booking.id }}">Update</button>
+    <button type="button" class="btn-edit" data-type="get-booking-info" data-booking-id="{{ booking.id }}">Update</button>
     <a href="/booking/{{ booking.id }}/cancel" class="btn btn-danger">Cancel</a>
 </div>
 {% empty %}
