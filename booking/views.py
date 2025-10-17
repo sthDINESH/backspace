@@ -102,9 +102,7 @@ def book_workspace(request):
             "user_editable_workspaces": user_editable_workspaces,
             "workspace_to_booking_id": workspace_to_user_booking_id,
         },
-        # template_name="booking/home.html",
         template_name="booking/interactive_floorplan.html",
-        # template_name="booking/workspace_list.html",
     )
 
 
