@@ -14,7 +14,7 @@ urlpatterns = [
         views.cancel_booking,
         name='cancel_booking'
     ),
-    path('', views.home, name='home'),
+    path('booking/workspace', views.book_workspace, name='book_workspace'),
     path('my-bookings/', views.my_bookings, name='my_bookings'),
     path(
         'booking/workspace/<int:workspace_id>',
@@ -27,6 +27,7 @@ urlpatterns = [
         name="booking_details",
     ),
     path('booking/<int:booking_id>/edit-form/', views.edit_booking_form, name='edit_booking_form'),
+    path('', views.home, name="home"),
 ]
 
     
