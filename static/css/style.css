@@ -78,3 +78,7 @@ body, p, h4 {
     background-color: #fff;
     color: var(--secondary-button);
 }
+
+.workspace.reserved {
+    fill:red;
+}

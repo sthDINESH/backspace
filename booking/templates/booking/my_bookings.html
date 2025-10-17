@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main_content %}
+<h2>My Bookings</h2>
+<ul>
+    {% for booking in bookings %}
+    <li>
+        {{ booking.workspace.name }} on {{ booking.booking_date }} 
+        ({{ booking.start_time }} - {{ booking.end_time }}) - {{ booking.status }}
+        <button class="btn btn-sm btn-warning" onclick="openEditModal({{ booking.id }})">Edit</button>
+        <a href="#" class="btn btn-sm btn-danger" onclick="cancelBooking({{ booking.id }})">Delete</a>
+    </li>
+    {% empty %}
+    <li>No bookings found.</li>
+    <li>
+        <a href="{% url 'workspace_list' %}" class="btn btn-primary">Add a Booking</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- Edit Booking Modal -->
+<div id="editBookingModal" class="modal" tabindex="-1" style="display:none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="editBookingForm">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Booking</h5>
+                    <button type="button" class="btn-close" onclick="closeEditModal()"></button>
+                </div>
+                <div class="modal-body" id="editBookingBody">
+                    <!-- Form fields will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/scripts.js' %}"></script>
+{% endblock %}
