@@ -597,15 +597,30 @@ The application will be available at `http://127.0.0.1:8000/`
 ## Credits
 
 ### Code Used
-
+- Django documentation for framework implementation
+- Bootstrap 5 documentation for responsive design components
+- Django Allauth documentation for authentication system
 
 
 ### Content
-
+- All written content created by the development team
+- User stories developed following Agile methodology
+- Database schema designed collaboratively by the team
 
 
 ### AI Usage
+This project strategically utilised AI tools to enhance development efficiency and code quality:
 
+**Claude AI (Anthropic) - Code Generation & Debugging:**
+- **Epic 3 & 4 Implementation:** Generated core CRUD operations and database models with built-in validation logic, saving significant development time while ensuring best practices
+- **Debugging Assistance:** Resolved template syntax errors and form validation issues through AI-guided troubleshooting
+- **Git Workflow:** Provided guidance on branch management and merge conflict resolution
+
+**GitHub Copilot - Unit Testing & Code Completion:**
+- Assisted in writing docstrings and inline documentation
+
+
+All AI-generated code was thoroughly reviewed, tested, and modified as needed to ensure functionality, security, and alignment with project requirements.
 
 
 ### Media
