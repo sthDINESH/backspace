@@ -1,8 +1,8 @@
-# backSPACE - Workspace Booking System
+# backSpace - Workspace Booking System
 
 backSPACE is a Django-based workspace booking system that allows users to book desks, meeting rooms, and collaboration spaces in real-time. The application features an interactive SVG floor plan, CRUD operations for managing bookings, and an admin panel for workspace management.
 
-![Am I Responsive Image] 
+[Am I Responsive Image] 
 <img width="1314" height="765" alt="Screenshot 2025-10-17 at 15 21 25" src="https://github.com/user-attachments/assets/a8b003e9-f89f-404d-becf-57ca564e98d4" />
 
 [View Live Site](https://backspace-c8042b918673.herokuapp.com/) | [View GitHub Repository](https://github.com/sthDINESH/backspace)
@@ -551,30 +551,110 @@ Please note that when deploying manually you will have to deploy after each chan
 
 ### Local Development
 
-#### Forking the Repository
+### Forking the Repository
 
+1. Go to the GitHub page of the repository you want to fork.  
+2. Click the **"Fork"** button in the top-right corner.  
+3. Choose your GitHub account as the destination.  
+4. GitHub will create a copy of the repository in your account.
 
+---
 
-#### Cloning the Repository
+### Cloning the Repository
+
+#### Option 1: Using GitHub Website and VS Code
+1. On your forked repository page, click the **"Code"** button.  
+2. Copy the **HTTPS** or **SSH** URL.  
+3. Open **VS Code** and press **Ctrl+Shift+P** (or **Cmd+Shift+P** on Mac).  
+4. Type and select **"Git: Clone"**.  
+5. Paste the URL and choose a folder to save the repository.  
+6. When prompted, open the project in **VS Code**.
+
+#### Option 2: Using VS Code GitHub Integration
+1. In VS Code, open the **Source Control** tab.  
+2. Click **"Clone Repository"**.  
+3. Sign in to **GitHub** if prompted.  
+4. Select your forked repository from the list.  
+5. VS Code will clone it locally and open it.
 
 
 
 #### Local Setup
+Once you've cloned the repository, follow these steps to set up the project locally:
 
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+# On Windows:
+.venv\Scripts\activate
+# On Mac/Linux:
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create env.py file in the root directory with:
+import os
+os.environ.setdefault("SECRET_KEY", "your-secret-key-here")
+os.environ.setdefault("DATABASE_URL", "sqlite:///db.sqlite3")
+os.environ.setdefault("DEBUG", "True")
+
+# Run migrations
+python manage.py migrate
+
+# Load workspace fixtures (optional)
+python manage.py loaddata workspace_fixture.json
+
+# Create superuser for admin access
+python manage.py createsuperuser
+
+# Collect static files
+python manage.py collectstatic
+
+# Run development server
+python manage.py runserver
+```
+
+The application will be available at `http://127.0.0.1:8000/`
 
 
 ## Credits
 
 ### Code Used
-
+- Django documentation for framework implementation
+- Bootstrap 5 documentation for responsive design components
+- Django Allauth documentation for authentication system
 
 
 ### Content
-
+- All written content created by the development team
+- User stories developed following Agile methodology
+- Database schema designed collaboratively by the team
 
 
 ### AI Usage
+AI tools were used strategically to assist development:
 
+- Code creation: Supported in generating base functions for logic.
+- Debugging: Helped identify merge conflict resolutions and JS logic errors.
+- Performance & UX: Suggested optimisations for responsiveness and accessibility.
+- Workflow: Improved team efficiency by clarifying tasks and speeding up problem-solving.
+- 
+We used AI as a collaborative assistant, not as a replacement for our coding. Every team member actively contributed to code, testing, and merging.
+This project strategically utilised AI tools to enhance development efficiency and code quality:
+
+**Claude AI (Anthropic) - Code Generation & Debugging:**
+- **Epic 3 & 4 Implementation:** Generated core CRUD operations and database models with built-in validation logic, saving significant development time while ensuring best practices
+- **Debugging Assistance:** Resolved template syntax errors and form validation issues through AI-guided troubleshooting
+- **Git Workflow:** Provided guidance on branch management and merge conflict resolution
+
+**GitHub Copilot - Unit Testing & Code Completion:**
+- Assisted in writing docstrings and inline documentation
+
+
+All AI-generated code was thoroughly reviewed, tested, and modified as needed to ensure functionality, security, and alignment with project requirements.
 
 
 ### Media
@@ -589,12 +669,27 @@ Please note that when deploying manually you will have to deploy after each chan
 
 
 ### Acknowledgments
+
+- https://github.com/sthDINESH - Dinesh
+  
+- https://github.com/sooiee - Souad 
+  
+- https://github.com/CXBeale - Christian
+  
+- https://github.com/Gilberto2025123 - Gilberto
+- **Code Institute** - For project guidelines and learning materials
+- **Our Facilitator Marko** - For guidance and feedback throughout the project
+- **Our Mentor Mark** - For project advice and help with git version control
+- **Team Members** - For collaboration on shared components
+- **Django Community** - For excellent documentation and support
+
 https://github.com/sthDINESH
+
 https://github.com/sooiee
+
 https://github.com/CXBeale
+
 https://github.com/Gilberto2025123
-
-
 
 
 
