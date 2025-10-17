@@ -344,7 +344,30 @@ See the ERD diagram above for visual representation of the database structure.
 - Supports redirect from both workspace floor plan and my_bookings page
 
 
+### Admin Panel
+**Workspace Management**
+- Full CRUD operations for workspaces via Django admin interface
+- Fields available for editing:
+  - Basic info: name, workspace_type, capacity, location, description
+  - SVG coordinates: svg_id, svg_shape, svg_x_coord, svg_y_coord, svg_width, svg_height
+  - Pricing: hourly_rate
+  - Availability: status (available, maintenance, reserved)
+  - Amenities: amenities field for listing features
+- Bulk actions for multiple workspaces
+- List display showing key fields (name, type, status, capacity)
+- Search and filter functionality
 
+**Booking Management**
+- View all bookings across all users
+- List display: user, workspace, booking_date, start_time, end_time, status
+- Filter by:
+  - User
+  - Date (booking_date)
+  - Status (pending, confirmed, cancelled, completed)
+- Ability to edit booking details (all fields accessible)
+- Ability to delete/cancel bookings
+- View timestamps (created_at, updated_at)
+- Full admin interface for managing all bookings
 
 
 
