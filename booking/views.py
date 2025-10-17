@@ -255,5 +255,38 @@ def get_workspace_details(request, workspace_id):
         return JsonResponse({
             "success": False,
             "error": "Workspace not found"
-        }, status=404
-    )
+        }, status=404)
+
+
+@login_required
+def get_booking_details(request, booking_id):
+    """
+    Returns JSON response related to :model:`Booking`
+    """
+    try:
+        booking = Booking.objects.select_related(
+            'workspace', 'user'
+        ).get(
+            pk=booking_id,
+            user=request.user
+        )
+        data = {
+            "id": booking.id,
+            "workspace_id": booking.workspace.id,
+            "workspace_name": booking.workspace.name,
+            "booking_date": booking.booking_date.isoformat(),
+            "start_time": booking.start_time.strftime('%H:%M'),
+            "end_time": booking.end_time.strftime('%H:%M'),
+            "status": booking.status,
+            "purpose": booking.purpose,
+            "notes": booking.notes,
+        }
+        return JsonResponse({
+            "success": True,
+            "booking": data
+        })
+    except Booking.DoesNotExist:
+        return JsonResponse({
+            "success": False,
+            "error": "Booking not found"
+        }, status=404)
