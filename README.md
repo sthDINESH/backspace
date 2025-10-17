@@ -300,6 +300,51 @@ See the ERD diagram above for visual representation of the database structure.
 - AJAX-based update functionality for seamless editing experience
 
 
+### CRUD Operations
+**Create (Implemented)**
+- User-friendly booking form with hidden fields populated from floor plan selection
+- Date and time pickers with business hour constraints (8 AM - 10 PM)
+- Real-time validation and error messages via Django messages framework
+- Workspace selection from interactive floor plan
+- Fields: workspace, booking_date, start_time, end_time, purpose, notes
+- Automatic status set to "confirmed" upon creation
+- Success confirmation with redirect to updated floor plan view
+- Validation prevents:
+  - Past date bookings
+  - Bookings outside business hours
+  - Overlapping bookings on same workspace
+  - Invalid time ranges (end time before start time)
+
+**Read (Implemented)**
+- "My Bookings" page showing all user bookings in list format
+- Each booking displays: workspace name, date, time range (start - end), status
+- Empty state handling with "No bookings found" message
+- Direct link to workspace list when no bookings exist
+- API endpoints for fetching booking details via JSON (get_booking_details view)
+- API endpoints for fetching workspace details via JSON (get_workspace_details view)
+
+**Update (Implemented)**
+- Edit booking functionality via modal on My Bookings page
+- AJAX POST request to update_booking view
+- Returns JSON response with success/error messages
+- Pre-filled form loaded dynamically with existing booking data (via get_booking_details)
+- Same validation as creation (business hours, overlapping bookings, past dates)
+- Error handling with structured JSON error messages
+- Status automatically set to "confirmed" upon successful update
+- Only booking owner can edit their own bookings (user verification in view)
+
+**Delete (Implemented)**
+- Delete booking functionality via cancel_booking view
+- JavaScript confirmation prompt on button click
+- Hard delete from database (removes booking record)
+- Success message: "Booking cancelled" via Django messages
+- Error handling: "Error cancelling booking" with exception details
+- Only booking owner can delete their own bookings (user verification in view)
+- Workspace becomes available again after deletion
+- Supports redirect from both workspace floor plan and my_bookings page
+
+
+
 
 
 
