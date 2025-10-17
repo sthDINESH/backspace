@@ -1,8 +1,8 @@
-# backSPACE - Workspace Booking System
+# backSpace - Workspace Booking System
 
 backSPACE is a Django-based workspace booking system that allows users to book desks, meeting rooms, and collaboration spaces in real-time. The application features an interactive SVG floor plan, CRUD operations for managing bookings, and an admin panel for workspace management.
 
-![Am I Responsive Image] 
+[Am I Responsive Image] 
 <img width="1314" height="765" alt="Screenshot 2025-10-17 at 15 21 25" src="https://github.com/user-attachments/assets/a8b003e9-f89f-404d-becf-57ca564e98d4" />
 
 [View Live Site](https://backspace-c8042b918673.herokuapp.com/) | [View GitHub Repository](https://github.com/sthDINESH/backspace)
@@ -551,35 +551,32 @@ Please note that when deploying manually you will have to deploy after each chan
 
 ### Local Development
 
-#### Forking the Repository
-Forking creates a copy of the repository in your own GitHub account, allowing you to make changes without affecting the original project.
+### Forking the Repository
 
-1. Log in to GitHub and navigate to the [backSPACE repository](https://github.com/sthDINESH/backspace)
-2. Click the "Fork" button in the top right corner of the page
-3. Select your GitHub account as the destination for the fork
-4. Wait for GitHub to complete the forking process
-5. You now have your own copy of the repository in your account
+1. Go to the GitHub page of the repository you want to fork.  
+2. Click the **"Fork"** button in the top-right corner.  
+3. Choose your GitHub account as the destination.  
+4. GitHub will create a copy of the repository in your account.
 
+---
 
-#### Cloning the Repository
-Cloning downloads a copy of the repository to your local machine.
+### Cloning the Repository
 
-1. Navigate to your forked repository on GitHub (or the original repository)
-2. Click the green "Code" button
-3. Copy the HTTPS URL (e.g., `https://github.com/YOUR-USERNAME/backspace.git`)
-4. Open your terminal/command prompt
-5. Navigate to the directory where you want to store the project:
-   ```bash
-   cd /path/to/your/projects
-   ```
-6. Clone the repository:
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/backspace.git
-   ```
-7. Navigate into the project directory:
-   ```bash
-   cd backspace
-   ```
+#### Option 1: Using GitHub Website and VS Code
+1. On your forked repository page, click the **"Code"** button.  
+2. Copy the **HTTPS** or **SSH** URL.  
+3. Open **VS Code** and press **Ctrl+Shift+P** (or **Cmd+Shift+P** on Mac).  
+4. Type and select **"Git: Clone"**.  
+5. Paste the URL and choose a folder to save the repository.  
+6. When prompted, open the project in **VS Code**.
+
+#### Option 2: Using VS Code GitHub Integration
+1. In VS Code, open the **Source Control** tab.  
+2. Click **"Clone Repository"**.  
+3. Sign in to **GitHub** if prompted.  
+4. Select your forked repository from the list.  
+5. VS Code will clone it locally and open it.
+
 
 
 #### Local Setup
@@ -638,6 +635,14 @@ The application will be available at `http://127.0.0.1:8000/`
 
 
 ### AI Usage
+AI tools were used strategically to assist development:
+
+- Code creation: Supported in generating base functions for logic.
+- Debugging: Helped identify merge conflict resolutions and JS logic errors.
+- Performance & UX: Suggested optimisations for responsiveness and accessibility.
+- Workflow: Improved team efficiency by clarifying tasks and speeding up problem-solving.
+- 
+We used AI as a collaborative assistant, not as a replacement for our coding. Every team member actively contributed to code, testing, and merging.
 This project strategically utilised AI tools to enhance development efficiency and code quality:
 
 **Claude AI (Anthropic) - Code Generation & Debugging:**
@@ -664,6 +669,14 @@ All AI-generated code was thoroughly reviewed, tested, and modified as needed to
 
 
 ### Acknowledgments
+
+- https://github.com/sthDINESH - Dinesh
+  
+- https://github.com/sooiee - Souad 
+  
+- https://github.com/CXBeale - Christian
+  
+- https://github.com/Gilberto2025123 - Gilberto
 - **Code Institute** - For project guidelines and learning materials
 - **Our Facilitator Marko** - For guidance and feedback throughout the project
 - **Our Mentor Mark** - For project advice and help with git version control
