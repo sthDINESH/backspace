@@ -635,6 +635,11 @@ All AI-generated code was thoroughly reviewed, tested, and modified as needed to
 
 
 ### Acknowledgments
+- **Code Institute** - For project guidelines and learning materials
+- **Our Facilitator Marko** - For guidance and feedback throughout the project
+- **Our Mentor Mark** - For project advice and help with git version control
+- **Team Members** - For collaboration on shared components
+- **Django Community** - For excellent documentation and support
 
 
 
