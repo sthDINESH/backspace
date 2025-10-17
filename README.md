@@ -703,13 +703,6 @@ All AI-generated code was thoroughly reviewed, tested, and modified as needed to
 - **Team Members** - For collaboration on shared components
 - **Django Community** - For excellent documentation and support
 
-https://github.com/sthDINESH
-
-https://github.com/sooiee
-
-https://github.com/CXBeale
-
-https://github.com/Gilberto2025123
 
 
 
