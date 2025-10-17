@@ -2,7 +2,8 @@
 
 backSPACE is a Django-based workspace booking system that allows users to book desks, meeting rooms, and collaboration spaces in real-time. The application features an interactive SVG floor plan, CRUD operations for managing bookings, and an admin panel for workspace management.
 
-![Am I Responsive Image](static/assets/images/amiresponsive.png)
+![Am I Responsive Image] 
+<img width="1314" height="765" alt="Screenshot 2025-10-17 at 15 21 25" src="https://github.com/user-attachments/assets/a8b003e9-f89f-404d-becf-57ca564e98d4" />
 
 [View Live Site](https://backspace-c8042b918673.herokuapp.com/) | [View GitHub Repository](https://github.com/sthDINESH/backspace)
 
@@ -260,32 +261,195 @@ See the ERD diagram above for visual representation of the database structure.
 ## Features
 
 ### Existing Features
+**Navigation Bar**
+- Present on all pages for consistent navigation using Bootstrap 5
+- Shows different links based on authentication status:
+  - Logged out: Home, Login, SignUp
+  - Logged in: Home, My Bookings, User dropdown with Logout
+- Fully responsive with mobile hamburger menu
+- Active page highlighting for user orientation
+- Toast notifications for user feedback (success, error, info messages)
 
+**User Authentication**
+- Secure registration and login system using Django Allauth
+- Password validation and security features
+- Session management with "remember me" functionality
+- Login required for booking functionality
+- Secure logout with session clearing
+
+**Interactive Floor Plan**
+- SVG-based visual representation of workspace layout
+- Dynamically generated from workspace database with SVG coordinates
+- Colour-coded availability status:
+  - Available workspaces (clickable)
+  - Reserved workspaces (non-clickable)
+  - User's own bookings (editable class)
+- Hover effects showing workspace details
+- Date and time picker to check availability for specific time slots
+- Real-time filtering based on selected date/time
+
+**My Bookings Page**
+- Dedicated page showing all user bookings in a simple list format
+- Each booking displays: workspace name, date, time range (start - end), and status
+- Edit and Delete buttons available for each booking
+- Empty state message: "No bookings found" with "Add a Booking" button
+- Direct link to workspace list for creating new bookings
+
+**Booking Management**
+- View all personal bookings with full details (workspace name, date, time, status)
+- Edit booking functionality via modal popup with inline form
+- Delete booking functionality with JavaScript confirmation prompt
+- Status tracking (pending, confirmed, cancelled, completed)
+- AJAX-based update functionality for seamless editing experience
 
 
 ### CRUD Operations
+**Create (Implemented)**
+- User-friendly booking form with hidden fields populated from floor plan selection
+- Date and time pickers with business hour constraints (8 AM - 10 PM)
+- Real-time validation and error messages via Django messages framework
+- Workspace selection from interactive floor plan
+- Fields: workspace, booking_date, start_time, end_time, purpose, notes
+- Automatic status set to "confirmed" upon creation
+- Success confirmation with redirect to updated floor plan view
+- Validation prevents:
+  - Past date bookings
+  - Bookings outside business hours
+  - Overlapping bookings on same workspace
+  - Invalid time ranges (end time before start time)
 
+**Read (Implemented)**
+- "My Bookings" page showing all user bookings in list format
+- Each booking displays: workspace name, date, time range (start - end), status
+- Empty state handling with "No bookings found" message
+- Direct link to workspace list when no bookings exist
+- API endpoints for fetching booking details via JSON (get_booking_details view)
+- API endpoints for fetching workspace details via JSON (get_workspace_details view)
+
+**Update (Implemented)**
+- Edit booking functionality via modal on My Bookings page
+- AJAX POST request to update_booking view
+- Returns JSON response with success/error messages
+- Pre-filled form loaded dynamically with existing booking data (via get_booking_details)
+- Same validation as creation (business hours, overlapping bookings, past dates)
+- Error handling with structured JSON error messages
+- Status automatically set to "confirmed" upon successful update
+- Only booking owner can edit their own bookings (user verification in view)
+
+**Delete (Implemented)**
+- Delete booking functionality via cancel_booking view
+- JavaScript confirmation prompt on button click
+- Hard delete from database (removes booking record)
+- Success message: "Booking cancelled" via Django messages
+- Error handling: "Error cancelling booking" with exception details
+- Only booking owner can delete their own bookings (user verification in view)
+- Workspace becomes available again after deletion
+- Supports redirect from both workspace floor plan and my_bookings page
 
 
 ### Admin Panel
+**Workspace Management**
+- Full CRUD operations for workspaces via Django admin interface
+- Fields available for editing:
+  - Basic info: name, workspace_type, capacity, location, description
+  - SVG coordinates: svg_id, svg_shape, svg_x_coord, svg_y_coord, svg_width, svg_height
+  - Pricing: hourly_rate
+  - Availability: status (available, maintenance, reserved)
+  - Amenities: amenities field for listing features
+- Bulk actions for multiple workspaces
+- List display showing key fields (name, type, status, capacity)
+- Search and filter functionality
+
+**Booking Management**
+- View all bookings across all users
+- List display: user, workspace, booking_date, start_time, end_time, status
+- Filter by:
+  - User
+  - Date (booking_date)
+  - Status (pending, confirmed, cancelled, completed)
+- Ability to edit booking details (all fields accessible)
+- Ability to delete/cancel bookings
+- View timestamps (created_at, updated_at)
+- Full admin interface for managing all bookings
 
 
 
 ### Future Implementations
+The following features are planned for future releases:
 
+- **Email Notifications:** Automatic confirmation emails and booking reminders
+- **Calendar Integration:** Export bookings to Google Calendar or Outlook
+- **Recurring Bookings:** Ability to book the same space weekly
+- **Payment System:** Integration with Stripe for paid workspaces
+- **Mobile App:** Native iOS and Android applications
+- **Booking Analytics:** Usage reports and statistics for administrators
+- **QR Code Check-in:** Digital check-in system using QR codes
 
 
 ### Accessibility
+The following accessibility features have been implemented:
+
+- **Semantic HTML:** Proper use of HTML5 semantic elements including `<nav>`, `<main>`, `<header>`, and `<footer>`
+- **ARIA Labels:** Limited ARIA support implemented:
+  - `aria-label="Toggle navigation"` on mobile menu button
+  - `aria-label="Close"` on modal close buttons
+  - `aria-current="page"` on active navigation links
+  - `aria-live` and `aria-atomic` on toast messages
+- **Keyboard Navigation:** Bootstrap default keyboard accessibility for navigation, forms, and modals
+- **Form Labels:** All form inputs have proper `<label>` tags with `for` attributes linking to input IDs
+- **Alt Text:** Descriptive alternative text provided for images (logo, hero image)
+- **Responsive Design:** Mobile-first Bootstrap responsive design accessible on all device sizes
+- **Django Crispy Forms:** Form rendering with built-in accessibility features
 
 
 
 ## Technologies Used
 
 ### Languages Used
+- **HTML5** - Structure and content of templates
+- **CSS3** - Custom styling and layout
+- **JavaScript (ES6)** - Interactive features for floor plan and form handling
+- **Python 3.12.8** - Backend logic and Django framework
 
 
+### Frameworks, Libraries & Programmes Used
+**Backend:**
+- **Django 4.2.25** - Python web framework
+- **Django Allauth 0.57.2** - Authentication system (registration, login, logout)
+- **Django Crispy Forms 2.4** - Form rendering with Bootstrap 5 styling
+- **Crispy Bootstrap5 0.7** - Bootstrap 5 template pack for Crispy Forms
+- **Gunicorn 20.1.0** - WSGI HTTP server for production deployment
+- **WhiteNoise 5.3.0** - Static file serving for production
+- **Psycopg2 2.9.11** - PostgreSQL database adapter
+- **dj-database-url 0.5.0** - Database configuration helper
+- **SQLite** - Development database
+- **PostgreSQL** - Production database (planned for Heroku deployment)
 
-### Frameworks, Libraries & Programs Used
+**Frontend:**
+- **Bootstrap 5.3.8** - CSS framework for responsive design (loaded via CDN)
+- **Font Awesome 6.x** - Icon library for user interface
+- **JavaScript (Vanilla)** - Interactive floor plan, form validation, confirmation dialogues
+
+**Development Tools:**
+- **Git** - Version control with meaningful commit messages
+- **GitHub** - Code repository, project management, and collaboration
+- **VS Code** - Primary development environment
+- **Heroku** - Cloud hosting platform (planned deployment)
+- **Python venv** - Virtual environment management
+- **Django Debug Toolbar** - Development debugging (optional)
+
+**Design Tools:**
+- **dbdiagram.io** - Database ERD design and visualisation
+- **SVG** - Interactive floor plan creation and editing
+- **Chrome DevTools** - Browser-based debugging and responsive testing
+- **config/svg_parser.py** - Custom tool to parse SVG floor plans and generate workspace fixtures
+
+**AI Tools:**
+- **Claude AI (Anthropic)** - Code generation, debugging, optimisation, and Git workflow guidance
+- **GitHub Copilot** - Code suggestions, completions, and unit test generation
+
+---
+
 
 ## Testing
 
@@ -334,8 +498,33 @@ Desktop
 
 ## Deployment
 
-### Heroku Deployment
 
+This website is deployed to Heroku from a GitHub repository, the following steps were taken:
+
+### Creating Repository on GitHub
+First make sure you are signed into GitHub and go to the code institutes template, which can be found here.
+Then click on use this template and select Create a new repository from the drop-down. Enter the name for the repository and click Create repository from template.
+Once the repository was created, I clicked the green gitpod button to create a workspace in gitpod so that I could write the code for the site.
+
+### Creating an app on Heroku
+After creating the repository on GitHub, head over to heroku and sign in.
+On the home page, click New and Create new app from the drop down.
+Give the app a name(this must be unique) and select a region I chose Europe as I am in Europe, Then click Create app.
+
+### Create a database
+Log into CIdatabase maker
+add your email address in input field and submit the form
+open database link in your email
+paste dabase URL in your DATABASE_URL variable in env.py file and in Heroku config vars
+
+### Deploying to Heroku.
+Head back over to heroku and click on your app and then go to the Settings tab
+On the settings page scroll down to the config vars section and enter the DATABASE_URL which you will set equal to the PostgresSQL URL, create Secret key this can be anything, CLOUDINARY_URL this will be set to your cloudinary url and finally Port which will be set to 8000.
+
+Then scroll to the top and go to the deploy tab and go down to the Deployment method section and select GitHub and then sign into your account.
+Below that in the search for a repository to connect to search box enter the name of your repository that you created on GitHub and click connect
+Once it has been connected scroll down to the Manual Deploy and click Deploy branch when it has deployed you will see a view app button below and this will bring you to your newly deployed app.
+Please note that when deploying manually you will have to deploy after each change you make to your repository.
 
 
 ### Local Development
@@ -367,6 +556,13 @@ Desktop
 
 
 ### Media
+ - Photo by Edmond Dantès from Pexels: https://www.pexels.com/photo/woman-in-red-shirt-sitting-at-the-table-4339473/
+ - Photo by SHVETS production from Pexels: https://www.pexels.com/photo/women-sitting-on-the-ground-looking-at-the-silver-laptop-9049688/
+ - Photo by Edmond Dantès from Pexels: https://www.pexels.com/photo/people-working-in-the-office-8068217/
+ - Photo by fauxels from Pexels: https://www.pexels.com/photo/two-women-sitting-in-front-of-computer-3184350/
+ - Photo by Antoni Shkraba Studio from Pexels: https://www.pexels.com/photo/people-in-the-office-having-a-meeting-7163354/
+ - Photo by Edmond Dantès from Pexels: https://www.pexels.com/photo/a-bearded-man-in-black-suit-working-on-his-laptop-4339866/
+ - ChatGPT generated logo/favicon
 
 
 
