@@ -5,6 +5,11 @@
 {% load crispy_forms_tags %}
 
 {% block main_content %}
+   <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+    <img src="{% static 'assets/images/Hero Image.jpg' %}" alt="Woman working on laptop"
+            class="img-fluid hero-image" style="width:100%; height: auto;">
+    </section>
 {% if user.is_authenticated %}
 <section>
 <h1>Hello, {{ user.username }}</h1>
@@ -13,12 +18,14 @@
 <form id="booking-form" method="post">
 {% csrf_token %}
 {% crispy booking_form %}
-<button type="submit" class="btn btn-primary">Submit Booking</button>
+<button type="submit" class="btn-signup">Submit</button>
 </form>
+
 </section>
 {% else %}
 <section>
-<h2>Backspace is live</h2>
+<h1>Welcome to Backspace</h1>
+<h2>Your Ultimate Workspace Booking Solution</h2>
 <p>Please <a href="{% url 'account_login' %}">login</a> to make a booking.</p>
 </section>
 {% endif %}

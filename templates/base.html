@@ -7,6 +7,7 @@
 {% url 'my_bookings' as my_bookings_url %}
 {% endspaceless %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,12 +17,22 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+        <!-- Font Awesome CSS -->
+     <script src="https://kit.fontawesome.com/f327302962.js" crossorigin="anonymous"></script>  
+
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ home_url }}">
-                <img src="" alt="Website logo">
+                <img src="{% static 'assets/images/favicon-32x32.png' %}" alt="Website logo">
                 Backspace
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -32,7 +43,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item px-1">
-                        <a class="nav-link {% if request.path == home_url %} active {% endif %}" {% if request.path == home_url %}aria-current='page'{% endif %} href="{{ home_url }}">Home</a>
+                        <a class="nav-link {% if request.path == home_url %} active {% endif %}" {% if
+                            request.path == home_url %}aria-current='page' {% endif %} href="{{ home_url }}">Home</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item px-1">
@@ -50,10 +62,13 @@
                     </li>
                     {% else %}
                     <li class="nav-item px-1">
-                        <a class="nav-link {% if request.path == login_url %} active {% endif %}" {% if request.path == login_url %}aria-current='page'{% endif %} href="{{ login_url }}">Login</a>
+                        <a class="nav-link {% if request.path == login_url %} active {% endif %}" {% if
+                            request.path==login_url %}aria-current='page' {% endif %} href="{{ login_url }}">Login</a>
                     </li>
                     <li class="nav-item px-1">
-                        <a class="nav-link {% if request.path == signup_url %} active {% endif %}" {% if request.path == signup_url %}aria-current='page'{% endif %} href="{{ signup_url }}">SignUp</a>
+                        <a class="nav-link {% if request.path == signup_url %} active {% endif %}" {% if
+                            request.path==signup_url %}aria-current='page' {% endif %}
+                            href="{{ signup_url }}">SignUp</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -87,5 +102,31 @@
         crossorigin="anonymous"></script>
     <!-- Custom JS -->
     <script src="{% static 'js/script.js' %}"></script>
+
+        <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-auto">
+        <p class="m-0 text-center text-white">
+            {% block copyright %}
+             &copy; 2025 Backspace Team. All rights reserved.
+        {% endblock copyright %}
+    </p>
+        <p class="m-0 text-center text-white">Follow Us:
+            <a href="https://www.facebook.com/" target="_blank" class="text-white text-decoration-none">
+                <i class="fa-brands fa-facebook fs-4"></i>
+            </a>
+            <a href="https://www.twitter.com/" target="_blank" class="text-white text-decoration-none">
+                <i class="fa-brands fa-twitter fs-4"></i>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" class="text-white text-decoration-none">
+                <i class="fa-brands fa-instagram fs-4"></i>
+            </a>
+            <a href="https://www.youtube.com/" target="_blank" class="text-white text-decoration-none">
+                <i class="fa-brands fa-youtube fs-4"></i>
+            </a>
+        </p>
+    </footer>
+    {% block extras %}
+    {% endblock %}
 </body>
+
 </html>
