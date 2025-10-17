@@ -141,7 +141,7 @@ def create_booking(request):
                 "Booking confirmed",
             )
             url = (
-                reverse('home')
+                reverse('book_workspace')
                 + f"?date={date}&start_time={start_time}&end_time={end_time}"
             )
             return redirect(url)
@@ -151,7 +151,7 @@ def create_booking(request):
                 messages.ERROR,
                 "Booking could not be made. Select a different slot",
             )
-    return redirect('home')
+    return redirect('book_workspace')
 
 
 @login_required
@@ -235,7 +235,10 @@ def cancel_booking(request, booking_id):
             messages.ERROR,
             f"Error cancelling booking - {e}"
         )
-    return redirect('home')
+    if request.GET.get('from') == 'workspace':
+        return redirect('book_workspace')
+    else:
+        return redirect('my_bookings')
 
 
 @login_required
