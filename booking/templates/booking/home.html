@@ -12,14 +12,6 @@
     </section>
 {% if user.is_authenticated %}
 <section>
-<h1>Hello, {{ user.username }}</h1>
-<h2>Backspace is live</h2>
-<h3>Create a New Booking</h3>
-<form id="booking-form" method="post">
-{% csrf_token %}
-{% crispy booking_form %}
-<button type="submit" class="btn-signup">Submit</button>
-</form>
 
 </section>
 {% else %}

@@ -12,6 +12,19 @@ from .forms import BookingForm, CheckBookingsForm
 def home(request):
     """
     """
+    booking_form = BookingForm()
+
+    return render(
+        request=request,
+        template_name='booking/home.html',
+        context={
+            "booking_form": booking_form,
+        },
+    )
+
+def book_workspace(request):
+    """
+    """
     if request.method == "POST":
         check_bookings_form = CheckBookingsForm(request.POST)
 
