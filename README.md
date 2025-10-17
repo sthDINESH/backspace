@@ -166,6 +166,28 @@ Both fonts are imported from Google Fonts to ensure consistent rendering across 
 
 
 ### Colour Scheme
+The colour scheme was chosen to create a professional, calming environment suitable for a workspace booking application, using a carefully curated palette of soft, welcoming colors.
+
+![colour Pallette](static/assets/images/backSpace%202.png)
+**Primary Colours:**
+- **Uranian Blue** `#b5e2faff` - Primary background color for navigation and main interface elements
+- **Moonstone** `#0fa3b1ff` - Primary button color for call-to-action elements
+- **Atomic Tangerine** `#f7a072ff` - Primary text color for emphasis and headings
+- **Tiffany Blue** `#a6d8d4ff` - Highlight color for interactive elements
+
+**Secondary Colours:**
+- **Baby Powder** `#f9f7f3ff` - Secondary button color and light background elements
+- **Vanilla** `#eddea4ff` - Secondary text color for subtle content
+- **Red** `#ff0000` - Reserved/unavailable workspace indicator on floor plan
+
+**Usage:**
+- Navigation bar uses Uranian Blue background
+- Headings (h1) use Atomic Tangerine for visibility
+- Body text uses Molengo font with appropriate color contrast
+- Interactive buttons use Moonstone for primary actions
+- Reserved workspaces on SVG floor plan display in red
+
+All colour combinations were tested to ensure readability and provide adequate contrast for accessibility.
 
 
 
