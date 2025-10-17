@@ -73,7 +73,10 @@ def home(request):
         start_time__lt=end_time,
         end_time__gt=start_time,
     )
-    workspace_to_user_booking_id = {b.workspace_id: b.id for b in user_bookings}
+    workspace_to_user_booking_id = {
+        b.workspace_id: b.id
+        for b in user_bookings
+    }
 
     return render(
         request=request,
@@ -226,3 +229,31 @@ def cancel_booking(request, booking_id):
 def my_bookings(request):
     bookings = Booking.objects.filter(user=request.user)
     return render(request, 'booking/my_bookings.html', {'bookings': bookings})
+
+
+def get_workspace_details(request, workspace_id):
+    """
+    Returns JSON response related to :model:`Workspace`
+    """
+    try:
+        workspace = WorkSpace.objects.get(pk=workspace_id)
+        data = {
+            "id": workspace.id,
+            "name": workspace.name,
+            "location": workspace.location,
+            "capacity": workspace.capacity,
+            "workspace_type": workspace.get_workspace_type_display(),
+            "description": workspace.description,
+            "amenities": workspace.get_amenities_list(),
+            "status": workspace.status,
+        }
+        return JsonResponse({
+            "success": True,
+            "workspace": data
+        })
+    except WorkSpace.DoesNotExist:
+        return JsonResponse({
+            "success": False,
+            "error": "Workspace not found"
+        }, status=404
+    )
