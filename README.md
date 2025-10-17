@@ -258,14 +258,48 @@ See the ERD diagram above for visual representation of the database structure.
 ## Features
 
 ### Existing Features
+**Navigation Bar**
+- Present on all pages for consistent navigation using Bootstrap 5
+- Shows different links based on authentication status:
+  - Logged out: Home, Login, SignUp
+  - Logged in: Home, My Bookings, User dropdown with Logout
+- Fully responsive with mobile hamburger menu
+- Active page highlighting for user orientation
+- Toast notifications for user feedback (success, error, info messages)
+
+**User Authentication**
+- Secure registration and login system using Django Allauth
+- Password validation and security features
+- Session management with "remember me" functionality
+- Login required for booking functionality
+- Secure logout with session clearing
+
+**Interactive Floor Plan**
+- SVG-based visual representation of workspace layout
+- Dynamically generated from workspace database with SVG coordinates
+- Colour-coded availability status:
+  - Available workspaces (clickable)
+  - Reserved workspaces (non-clickable)
+  - User's own bookings (editable class)
+- Hover effects showing workspace details
+- Date and time picker to check availability for specific time slots
+- Real-time filtering based on selected date/time
+
+**My Bookings Page**
+- Dedicated page showing all user bookings in a simple list format
+- Each booking displays: workspace name, date, time range (start - end), and status
+- Edit and Delete buttons available for each booking
+- Empty state message: "No bookings found" with "Add a Booking" button
+- Direct link to workspace list for creating new bookings
+
+**Booking Management**
+- View all personal bookings with full details (workspace name, date, time, status)
+- Edit booking functionality via modal popup with inline form
+- Delete booking functionality with JavaScript confirmation prompt
+- Status tracking (pending, confirmed, cancelled, completed)
+- AJAX-based update functionality for seamless editing experience
 
 
-
-### CRUD Operations
-
-
-
-### Admin Panel
 
 
 
