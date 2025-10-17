@@ -193,6 +193,28 @@ All colour combinations were tested to ensure readability and provide adequate c
 
 
 ### Entity Relationship Diagram (ERD) Design
+The core of the study space booking system is based on three main entities: **User**, **WorkSpace**, and **Booking**.  
+- **User**: Represents a person who can book study spaces (using Django’s built-in User model).
+- **WorkSpace**: Represents a bookable room or area in the library.
+- **Booking**: Represents a reservation made by a user for a specific study space and time.
+
+Each booking links a user to a study space for a specific time period.  
+A user can have many bookings, and a study space can have many bookings.
+
+
+
+```
+User --------< Booking >-------- WorkSpace
+```
+
+- **User** (1) — (M) **Booking**
+- **WorkSpace** (1) — (M) **Booking**
+
+This structure allows users to reserve available study spaces and manage their bookings efficiently.
+
+![ERD Diagram](static/assets/images/erd-diagram.png)
+
+credit: dbdiagram.io, https://dbdiagram.io/
 
 
 
