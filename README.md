@@ -260,32 +260,195 @@ See the ERD diagram above for visual representation of the database structure.
 ## Features
 
 ### Existing Features
+**Navigation Bar**
+- Present on all pages for consistent navigation using Bootstrap 5
+- Shows different links based on authentication status:
+  - Logged out: Home, Login, SignUp
+  - Logged in: Home, My Bookings, User dropdown with Logout
+- Fully responsive with mobile hamburger menu
+- Active page highlighting for user orientation
+- Toast notifications for user feedback (success, error, info messages)
 
+**User Authentication**
+- Secure registration and login system using Django Allauth
+- Password validation and security features
+- Session management with "remember me" functionality
+- Login required for booking functionality
+- Secure logout with session clearing
+
+**Interactive Floor Plan**
+- SVG-based visual representation of workspace layout
+- Dynamically generated from workspace database with SVG coordinates
+- Colour-coded availability status:
+  - Available workspaces (clickable)
+  - Reserved workspaces (non-clickable)
+  - User's own bookings (editable class)
+- Hover effects showing workspace details
+- Date and time picker to check availability for specific time slots
+- Real-time filtering based on selected date/time
+
+**My Bookings Page**
+- Dedicated page showing all user bookings in a simple list format
+- Each booking displays: workspace name, date, time range (start - end), and status
+- Edit and Delete buttons available for each booking
+- Empty state message: "No bookings found" with "Add a Booking" button
+- Direct link to workspace list for creating new bookings
+
+**Booking Management**
+- View all personal bookings with full details (workspace name, date, time, status)
+- Edit booking functionality via modal popup with inline form
+- Delete booking functionality with JavaScript confirmation prompt
+- Status tracking (pending, confirmed, cancelled, completed)
+- AJAX-based update functionality for seamless editing experience
 
 
 ### CRUD Operations
+**Create (Implemented)**
+- User-friendly booking form with hidden fields populated from floor plan selection
+- Date and time pickers with business hour constraints (8 AM - 10 PM)
+- Real-time validation and error messages via Django messages framework
+- Workspace selection from interactive floor plan
+- Fields: workspace, booking_date, start_time, end_time, purpose, notes
+- Automatic status set to "confirmed" upon creation
+- Success confirmation with redirect to updated floor plan view
+- Validation prevents:
+  - Past date bookings
+  - Bookings outside business hours
+  - Overlapping bookings on same workspace
+  - Invalid time ranges (end time before start time)
 
+**Read (Implemented)**
+- "My Bookings" page showing all user bookings in list format
+- Each booking displays: workspace name, date, time range (start - end), status
+- Empty state handling with "No bookings found" message
+- Direct link to workspace list when no bookings exist
+- API endpoints for fetching booking details via JSON (get_booking_details view)
+- API endpoints for fetching workspace details via JSON (get_workspace_details view)
+
+**Update (Implemented)**
+- Edit booking functionality via modal on My Bookings page
+- AJAX POST request to update_booking view
+- Returns JSON response with success/error messages
+- Pre-filled form loaded dynamically with existing booking data (via get_booking_details)
+- Same validation as creation (business hours, overlapping bookings, past dates)
+- Error handling with structured JSON error messages
+- Status automatically set to "confirmed" upon successful update
+- Only booking owner can edit their own bookings (user verification in view)
+
+**Delete (Implemented)**
+- Delete booking functionality via cancel_booking view
+- JavaScript confirmation prompt on button click
+- Hard delete from database (removes booking record)
+- Success message: "Booking cancelled" via Django messages
+- Error handling: "Error cancelling booking" with exception details
+- Only booking owner can delete their own bookings (user verification in view)
+- Workspace becomes available again after deletion
+- Supports redirect from both workspace floor plan and my_bookings page
 
 
 ### Admin Panel
+**Workspace Management**
+- Full CRUD operations for workspaces via Django admin interface
+- Fields available for editing:
+  - Basic info: name, workspace_type, capacity, location, description
+  - SVG coordinates: svg_id, svg_shape, svg_x_coord, svg_y_coord, svg_width, svg_height
+  - Pricing: hourly_rate
+  - Availability: status (available, maintenance, reserved)
+  - Amenities: amenities field for listing features
+- Bulk actions for multiple workspaces
+- List display showing key fields (name, type, status, capacity)
+- Search and filter functionality
+
+**Booking Management**
+- View all bookings across all users
+- List display: user, workspace, booking_date, start_time, end_time, status
+- Filter by:
+  - User
+  - Date (booking_date)
+  - Status (pending, confirmed, cancelled, completed)
+- Ability to edit booking details (all fields accessible)
+- Ability to delete/cancel bookings
+- View timestamps (created_at, updated_at)
+- Full admin interface for managing all bookings
 
 
 
 ### Future Implementations
+The following features are planned for future releases:
 
+- **Email Notifications:** Automatic confirmation emails and booking reminders
+- **Calendar Integration:** Export bookings to Google Calendar or Outlook
+- **Recurring Bookings:** Ability to book the same space weekly
+- **Payment System:** Integration with Stripe for paid workspaces
+- **Mobile App:** Native iOS and Android applications
+- **Booking Analytics:** Usage reports and statistics for administrators
+- **QR Code Check-in:** Digital check-in system using QR codes
 
 
 ### Accessibility
+The following accessibility features have been implemented:
+
+- **Semantic HTML:** Proper use of HTML5 semantic elements including `<nav>`, `<main>`, `<header>`, and `<footer>`
+- **ARIA Labels:** Limited ARIA support implemented:
+  - `aria-label="Toggle navigation"` on mobile menu button
+  - `aria-label="Close"` on modal close buttons
+  - `aria-current="page"` on active navigation links
+  - `aria-live` and `aria-atomic` on toast messages
+- **Keyboard Navigation:** Bootstrap default keyboard accessibility for navigation, forms, and modals
+- **Form Labels:** All form inputs have proper `<label>` tags with `for` attributes linking to input IDs
+- **Alt Text:** Descriptive alternative text provided for images (logo, hero image)
+- **Responsive Design:** Mobile-first Bootstrap responsive design accessible on all device sizes
+- **Django Crispy Forms:** Form rendering with built-in accessibility features
 
 
 
 ## Technologies Used
 
 ### Languages Used
+- **HTML5** - Structure and content of templates
+- **CSS3** - Custom styling and layout
+- **JavaScript (ES6)** - Interactive features for floor plan and form handling
+- **Python 3.12.8** - Backend logic and Django framework
 
 
+### Frameworks, Libraries & Programmes Used
+**Backend:**
+- **Django 4.2.25** - Python web framework
+- **Django Allauth 0.57.2** - Authentication system (registration, login, logout)
+- **Django Crispy Forms 2.4** - Form rendering with Bootstrap 5 styling
+- **Crispy Bootstrap5 0.7** - Bootstrap 5 template pack for Crispy Forms
+- **Gunicorn 20.1.0** - WSGI HTTP server for production deployment
+- **WhiteNoise 5.3.0** - Static file serving for production
+- **Psycopg2 2.9.11** - PostgreSQL database adapter
+- **dj-database-url 0.5.0** - Database configuration helper
+- **SQLite** - Development database
+- **PostgreSQL** - Production database (planned for Heroku deployment)
 
-### Frameworks, Libraries & Programs Used
+**Frontend:**
+- **Bootstrap 5.3.8** - CSS framework for responsive design (loaded via CDN)
+- **Font Awesome 6.x** - Icon library for user interface
+- **JavaScript (Vanilla)** - Interactive floor plan, form validation, confirmation dialogues
+
+**Development Tools:**
+- **Git** - Version control with meaningful commit messages
+- **GitHub** - Code repository, project management, and collaboration
+- **VS Code** - Primary development environment
+- **Heroku** - Cloud hosting platform (planned deployment)
+- **Python venv** - Virtual environment management
+- **Django Debug Toolbar** - Development debugging (optional)
+
+**Design Tools:**
+- **dbdiagram.io** - Database ERD design and visualisation
+- **SVG** - Interactive floor plan creation and editing
+- **Chrome DevTools** - Browser-based debugging and responsive testing
+- **config/svg_parser.py** - Custom tool to parse SVG floor plans and generate workspace fixtures
+
+**AI Tools:**
+- **Claude AI (Anthropic)** - Code generation, debugging, optimisation, and Git workflow guidance
+- **GitHub Copilot** - Code suggestions, completions, and unit test generation
+
+---
+
 
 ## Testing
 
