@@ -314,8 +314,15 @@ Mobile
 Desktop
 <img width="1009" height="727" alt="Desktop - BACKSPACE" src="https://github.com/user-attachments/assets/8dba250b-48ef-4597-8441-506a284e5041" />
 
+#### Javascript
+![Validation results](static/assets/images/eshint_validation.png)
 
-
+#### Python Lint
+![admin.py](static/assets/images/ci_admin_py.png)
+![forms.py](static/assets/images/ci_forms_py.png)
+![models.py](static/assets/images/ci_models_py.png)
+![views.py](static/assets/images/ci_views_py.png)
+![urls.py](static/assets/images/ci_urls_py.png)
 ## Bugs
 
 ### Fixed Bugs
