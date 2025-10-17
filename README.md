@@ -148,6 +148,20 @@ Mobile:
 
 
 ### Typography
+**Primary Font:** Zain
+- Used for headings (h1, h2, h3)
+- Modern, clean sans-serif typeface
+- Weights used: 200 (Extra Light), 300 (Light), 400 (Regular), 700 (Bold), 800 (Extra Bold), 900 (Black)
+- Italic variants: 300, 400
+- Chosen for its contemporary appearance and excellent readability in headings
+
+**Secondary Font:** Molengo
+- Used for body text, paragraphs, and h4 headings
+- Selected for legibility and comfortable reading experience
+- Weight used: 400 (Regular)
+- Applied to body, paragraphs, and secondary headings for content consistency
+
+Both fonts are imported from Google Fonts to ensure consistent rendering across all browsers and devices.
 
 
 
