@@ -523,15 +523,75 @@ Please note that when deploying manually you will have to deploy after each chan
 ### Local Development
 
 #### Forking the Repository
+Forking creates a copy of the repository in your own GitHub account, allowing you to make changes without affecting the original project.
 
+1. Log in to GitHub and navigate to the [backSPACE repository](https://github.com/sthDINESH/backspace)
+2. Click the "Fork" button in the top right corner of the page
+3. Select your GitHub account as the destination for the fork
+4. Wait for GitHub to complete the forking process
+5. You now have your own copy of the repository in your account
 
 
 #### Cloning the Repository
+Cloning downloads a copy of the repository to your local machine.
 
+1. Navigate to your forked repository on GitHub (or the original repository)
+2. Click the green "Code" button
+3. Copy the HTTPS URL (e.g., `https://github.com/YOUR-USERNAME/backspace.git`)
+4. Open your terminal/command prompt
+5. Navigate to the directory where you want to store the project:
+   ```bash
+   cd /path/to/your/projects
+   ```
+6. Clone the repository:
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/backspace.git
+   ```
+7. Navigate into the project directory:
+   ```bash
+   cd backspace
+   ```
 
 
 #### Local Setup
+Once you've cloned the repository, follow these steps to set up the project locally:
 
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+# On Windows:
+.venv\Scripts\activate
+# On Mac/Linux:
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create env.py file in the root directory with:
+import os
+os.environ.setdefault("SECRET_KEY", "your-secret-key-here")
+os.environ.setdefault("DATABASE_URL", "sqlite:///db.sqlite3")
+os.environ.setdefault("DEBUG", "True")
+
+# Run migrations
+python manage.py migrate
+
+# Load workspace fixtures (optional)
+python manage.py loaddata workspace_fixture.json
+
+# Create superuser for admin access
+python manage.py createsuperuser
+
+# Collect static files
+python manage.py collectstatic
+
+# Run development server
+python manage.py runserver
+```
+
+The application will be available at `http://127.0.0.1:8000/`
 
 
 ## Credits
