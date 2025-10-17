@@ -25,8 +25,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/apple-touch-icon.png' %}">
     <link rel="manifest" href="{% static 'assets/manifest.json' %}">
     <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="{% static 'assets/images/site.webmanifest' %}">
 
-        <!-- Font Awesome CSS -->
+    <!-- Font Awesome CSS -->
      <script src="https://kit.fontawesome.com/f327302962.js" crossorigin="anonymous"></script>  
 
 </head>
@@ -58,7 +59,6 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle user-profile ms-lg-5" href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-user"></i>
                             {{ user.username }}
                         </a>
                         <ul class="dropdown-menu">

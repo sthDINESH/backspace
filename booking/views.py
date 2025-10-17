@@ -22,6 +22,7 @@ def home(request):
         },
     )
 
+
 def book_workspace(request):
     """
     """
@@ -180,19 +181,22 @@ def update_booking(request, booking_id):
                 })
             else:
                 # log errors for debugging
-                print("BookingForm errors:", booking_form.errors)  
+                print("BookingForm errors:", booking_form.errors)
 
                 json_errors = {}
-                for field, err_list in booking_form.errors.get_json_data().items():
+                errors_json = booking_form.errors.get_json_data()
+                for field, err_list in errors_json.items():
                     json_errors[field] = [e.get('message') for e in err_list]
 
                 # return structured errors to the client for display
                 return JsonResponse(
                     {
                         'success': False,
-                        'message': 'Not updated - Errors in submitted booking form',
+                        'message': 'Not updated - booking form has errors',
                         'errors': json_errors,
-                        'non_field_errors': list(booking_form.non_field_errors()),
+                        'non_field_errors': list(
+                            booking_form.non_field_errors()
+                        ),
                     },
                     status=400
                 )
@@ -242,6 +246,11 @@ def cancel_booking(request, booking_id):
             messages.ERROR,
             f"Error cancelling booking - {e}"
         )
+
+    # AJAX support
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        return JsonResponse({"success": True, "message": "Complete"})
+
     if request.GET.get('from') == 'workspace':
         return redirect('book_workspace')
     else:
@@ -253,11 +262,19 @@ def my_bookings(request):
     bookings = Booking.objects.filter(user=request.user)
     return render(request, 'booking/my_bookings.html', {'bookings': bookings})
 
+
 @login_required
 def edit_booking_form(request, booking_id):
     booking = Booking.objects.get(pk=booking_id, user=request.user)
     form = BookingForm(instance=booking)
-    return render(request, 'booking/edit_booking_form.html', {'form': form, 'booking': booking})
+    return render(
+        request,
+        'booking/edit_booking_form.html',
+        {
+            'form': form,
+            'booking': booking
+        },
+    )
 
 
 def get_workspace_details(request, workspace_id):

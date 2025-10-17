@@ -43,12 +43,18 @@ class WorkSpace(models.Model):
     name = models.CharField(
         max_length=100,
         unique=True,  # Enhanced: Prevents duplicate workspace names
-        help_text="Unique name for the workspace (e.g., 'Desk-A1', 'Meeting Room 2')"
+        help_text=(
+            "Unique name for the workspace (e.g., 'Desk-A1', "
+            "'Meeting Room 2')"
+        )
     )
 
     location = models.CharField(
         max_length=255,
-        help_text="Physical location or floor level (e.g., 'Ground Floor', 'First Floor East Wing')"
+        help_text=(
+            "Physical location or floor level (e.g., 'Ground Floor', "
+            "'First Floor East Wing')"
+        )
     )
 
     capacity = models.PositiveIntegerField(
@@ -74,7 +80,10 @@ class WorkSpace(models.Model):
     svg_id = models.CharField(
         max_length=50,
         # unique=True, # <-- Comment out or remove this line temporarily
-        help_text="Unique ID matching the SVG element in the floor plan (e.g., 'desk-a1-svg')"
+        help_text=(
+            "Unique ID matching the SVG element in the floor plan "
+            "(e.g., 'desk-a1-svg')"
+        )
     )
 
     svg_shape = models.CharField(
@@ -116,7 +125,10 @@ class WorkSpace(models.Model):
 
     amenities = models.TextField(
         blank=True,
-        help_text="Comma-separated list of amenities (e.g., 'WiFi, Monitor, Whiteboard')"
+        help_text=(
+            "Comma-separated list of amenities (e.g., "
+            "'WiFi, Monitor, Whiteboard')"
+        )
     )
 
     hourly_rate = models.DecimalField(
@@ -161,7 +173,7 @@ class WorkSpace(models.Model):
         """
         Returns amenities as a Python list for easy template display.
 
-        Example: "WiFi, Monitor, Whiteboard" → ['WiFi', 'Monitor', 'Whiteboard']
+        Example: "WiFi, Monitor, Whiteboard" -> ['WiFi','Monitor','Whiteboard']
         """
         if self.amenities:
             return [amenity.strip() for amenity in self.amenities.split(',')]
@@ -305,7 +317,11 @@ class Booking(models.Model):
     # ========================================================================
 
     def __str__(self):
-        return f"{self.user.username} - {self.workspace.name} on {self.booking_date}"
+        # Keep line length under 79 characters by splitting the f-string
+        return (
+            f"{self.user.username} - {self.workspace.name} on "
+            f"{self.booking_date}"
+        )
 
     # ========================================================================
     # VALIDATION METHOD
@@ -348,21 +364,35 @@ class Booking(models.Model):
             business_start = time(8, 0)
             business_end = time(22, 0)
 
-            if self.start_time < business_start or self.end_time > business_end:
-                errors['start_time'] = "Bookings must be between 8:00 AM and 10:00 PM."
+            if (
+                self.start_time < business_start
+                or self.end_time > business_end
+            ):
+                errors['start_time'] = (
+                    "Bookings must be between 8:00 AM and "
+                    "10:00 PM."
+                )
 
         # --------------------------------------------------------------------
         # CHECK 4: Workspace must be available
         # --------------------------------------------------------------------
         if self.workspace and not self.workspace.is_available():
-            errors['workspace'] = f"This workspace is currently {self.workspace.status}."
+            errors['workspace'] = (
+                f"This workspace is currently "
+                f"{self.workspace.status}."
+            )
 
         # --------------------------------------------------------------------
         # CHECK 5: No overlapping bookings
         # Prevent double-booking the same workspace at the same time
         # --------------------------------------------------------------------
-        if self.workspace and self.booking_date and self.start_time and self.end_time:
-            # Find all confirmed/pending bookings for this workspace on this date
+        if (
+            self.workspace
+            and self.booking_date
+            and self.start_time
+            and self.end_time
+        ):
+            # Find confirmed/pending bookings for this workspace on date
             overlapping_bookings = Booking.objects.filter(
                 workspace=self.workspace,
                 booking_date=self.booking_date,
@@ -412,8 +442,12 @@ class Booking(models.Model):
             float: Duration in hours (e.g., 2.5 for 2 hours 30 minutes)
         """
         if self.start_time and self.end_time:
-            start_datetime = datetime.combine(self.booking_date, self.start_time)
-            end_datetime = datetime.combine(self.booking_date, self.end_time)
+            start_datetime = datetime.combine(
+                self.booking_date, self.start_time
+            )
+            end_datetime = datetime.combine(
+                self.booking_date, self.end_time
+            )
             duration = end_datetime - start_datetime
             return duration.total_seconds() / 3600  # Convert seconds to hours
         return 0

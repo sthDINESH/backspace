@@ -20,6 +20,7 @@
 
 <!-- Edit Booking Modal -->
 <div id="editBookingModal" class="modal" tabindex="-1" style="display:none;">
+    {% csrf_token %}
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="editBookingForm">
