@@ -1,3 +1,4 @@
+/*jshint esversion: 8*/
 document.addEventListener("DOMContentLoaded", function () {
   const bookingModalEl = document.querySelector("#booking-modal");
   let bookingModal = null;
@@ -151,9 +152,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // non-field errors
       if (nonFieldErrors && nonField) {
-        nonField.textContent = Array.isArray(nonFieldErrors)
-          ? nonFieldErrors.join(" ")
-          : nonFieldErrors;
+        nonField.textContent = Array.isArray(nonFieldErrors)?
+          nonFieldErrors.join(" "):
+          nonFieldErrors;
       }
     }
   });

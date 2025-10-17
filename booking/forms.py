@@ -4,6 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Div
 from datetime import datetime, time
 
+
 def business_hour_choices():
     # Generates choices from 08:00 to 22:00 in 30-minute increments
     choices = []
@@ -55,9 +56,19 @@ class BookingForm(forms.ModelForm):
         )
         widgets = {
             'workspace': forms.HiddenInput(),
-            'booking_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'booking_date': forms.DateInput(
+                attrs={
+                    'type': 'date',
+                    'class': 'form-control',
+                }
+            ),
             'purpose': forms.TextInput(attrs={'class': 'form-control'}),
-            'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'notes': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'rows': 3,
+                }
+            ),
         }
 
     # Convert selected "HH:MM" strings into datetime.time objects for the model
@@ -104,4 +115,3 @@ class CheckBookingsForm(forms.Form):
                 css_class='d-flex gap-2 align-items-end'
             )
         )
-
