@@ -119,6 +119,31 @@ User stories were created and tracked using GitHub Projects with MoSCoW prioriti
 
 
 ### Wireframes
+Wireframes were created using Balsamiq to plan the layout and user flow before development.
+
+**Desktop Wireframes:**
+- Home page wireframe
+- Floor plan view wireframe
+- Booking list wireframe
+- Booking form wireframe
+
+**Mobile Wireframes:**
+- Responsive layouts for all pages
+- Mobile navigation design
+
+
+Desktop:
+![Desktop 1 Wireframe](static/assets/images/Desktop%20.png) ![Desktop 2 Wireframe](static/assets/images/Desktop%202.png)
+
+
+Tablet:
+![Tablet Wireframe](static/assets/images/Tablet.png)
+
+
+
+Mobile:
+
+![Mobile Wireframe](static/assets/images/Mobile.png)
 
 
 
@@ -170,7 +195,7 @@ User stories were created and tracked using GitHub Projects with MoSCoW prioriti
 
 ### Frameworks, Libraries & Programs Used
 
-
+## Testing
 
 ### Manual Testing
 
