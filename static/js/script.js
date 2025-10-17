@@ -172,4 +172,5 @@ function cancelBooking(bookingId) {
         console.log("Clicked");
       });
     });
-});
+;
+    
