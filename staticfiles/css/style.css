@@ -18,11 +18,32 @@
 
   --primary-font: 'Lato', sans-serif;
   --secondary-font: 'Molengo', sans-serif;
+
+  /* New tertiary dark orange (darker variant of --primary-text)
+     Chosen to provide good contrast when used over --primary-background */
+  --tertiary-color: #c55a2a;
+
+  --navbar-height: 70px;
+}
+
+body{
+  font-family: var(--secondary-font), sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: var(--primary-background);
+  padding-top: var(--navbar-height); /* was 76px */
+}
+
+body, p, h4 {
+  font-family: var(--secondary-font) !important;  /* Ensure consistency across body, paragraphs, and h4 */
+  
 }
 
 
+/* Navbar */
 .navbar {
-  background-color: var(--primary-background);
+  background-color: var(--primary-text);
   position: fixed;
   top: 0;
   width: 100%;
@@ -33,20 +54,23 @@
 
 .navbar, .navbar * {
   font-family: var(--primary-font), sans-serif !important;
-  color: var(--primary-text) !important;
+  color: var(--tertiary-color) !important;
 }
 
-body{
-  font-family: var(--secondary-font), sans-serif;
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-  background-color: var(--primary-background);
-  padding-top: 76px; /* Account for fixed navbar height */
+.navbar-brand {
+    font-size: 1.75rem; /* increase title size (adjust value as needed) */
+    font-weight: 100;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.2em; /* increase or decrease to taste (examples: 0.04em, 0.1em, 2px) */
+
 }
 
-body, p, h4 {
-  font-family: var(--secondary-font) !important;  /* Ensure consistency across body, paragraphs, and h4 */
+/* ensure logo stays appropriately sized next to larger title */
+.navbar-brand img {
+    width: 32px;
+    height: auto;
   
 }
 
@@ -98,15 +122,19 @@ p {
 /* Hero section styling */
 
 .hero-row {
+  /* remove the extra top padding so the hero sits flush under the navbar */
+  min-height: calc(100vh - var(--navbar-height));
+  padding-top: 0; /* <- changed */
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
   gap: 2rem;
   background: var(--secondary-button, #f9f7f3);
 }
 .hero-img {
+  display: block;
+  margin-top: 0;
   width: 50vw;
   height: 80vh;
   object-fit: cover;
@@ -118,6 +146,11 @@ p {
   color: var(--primary-background, #0fa3b1);
 }
 
+.brand-tertiary {
+  color: var(--tertiary-color);
+  /* keep strong weight if needed */
+  font-weight: 700;
+}
 
 /* Workspace page styling */
 .workspace {
@@ -168,3 +201,25 @@ p {
   }
 
 }
+
+/* Add these styles to improve My Bookings layout */
+.booking-card {
+  border-radius: 0.75rem;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.booking-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(15, 15, 15, 0.12);
+}
+
+/* Ensure cards stretch equally in a row */
+.booking-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* small utility for button spacing on very small screens */
+@media (max-width: 576px) {
+  .booking-card .btn { font-size: 0.9rem; }
+}
+
