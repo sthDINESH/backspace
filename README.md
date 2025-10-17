@@ -148,7 +148,9 @@ Mobile:
 
 
 ### Typography
-**Primary Font:** Zain
+<img width="1000" height="620" alt="Screenshot 2025-10-17 at 15 11 35" src="https://github.com/user-attachments/assets/9b7a655b-69f1-4093-be7d-43fc6e773893" />
+
+**Primary Font:** Lato
 - Used for headings (h1, h2, h3)
 - Modern, clean sans-serif typeface
 - Weights used: 200 (Extra Light), 300 (Light), 400 (Regular), 700 (Bold), 800 (Extra Bold), 900 (Black)
@@ -459,6 +461,21 @@ The following accessibility features have been implemented:
 
 
 ### Code Validation
+
+#### CSS
+<img width="1494" height="821" alt="CSS Validation - BACKSPACE" src="https://github.com/user-attachments/assets/ba5221e9-d9bf-492c-941d-1c426a080461" />
+
+
+#### HTML
+<img width="1492" height="804" alt="HTML Validation - BACKSPACE" src="https://github.com/user-attachments/assets/aec66c3b-d887-4f22-bd9b-b1a37b075a7a" />
+
+#### LightHouse 
+
+Mobile 
+<img width="916" height="594" alt="Mobile- BACKSPACE" src="https://github.com/user-attachments/assets/ceb83854-5bb2-44cf-b881-36e389d3773f" />
+
+Desktop
+<img width="1009" height="727" alt="Desktop - BACKSPACE" src="https://github.com/user-attachments/assets/8dba250b-48ef-4597-8441-506a284e5041" />
 
 
 

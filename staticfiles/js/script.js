@@ -1,57 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Hello from JS");
-
-  // ===============================
-  // JS FOR MY BOOKINGS PAGE TEMPLATE
-  // ===============================
-
-  /* Modal handling for editing bookings */
-  function openEditModal(bookingId) {
-    fetch(`/booking/${bookingId}/edit-form/`)
-      .then((response) => response.text())
-      .then((html) => {
-        document.getElementById("editBookingBody").innerHTML = html;
-        document.getElementById("editBookingModal").style.display = "block";
-        document.getElementById("editBookingForm").onsubmit = function (e) {
-          e.preventDefault();
-          let formData = new FormData(this);
-          fetch(`/booking/${bookingId}/update/`, {
-            method: "POST",
-            body: formData,
-            headers: { "X-CSRFToken": formData.get("csrfmiddlewaretoken") },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.success) {
-                alert("Booking updated!");
-                location.reload();
-              } else {
-                alert(data.message);
-              }
-            });
-        };
-      });
-  }
-  /* close Edit Booking Modal */
-  function closeEditModal() {
-    document.getElementById("editBookingModal").style.display = "none";
-  }
-  /* Cancel Booking Function */
-  function cancelBooking(bookingId) {
-    if (confirm("Are you sure you want to delete this booking?")) {
-      fetch(`/booking/${bookingId}/cancel/`, { method: "POST" })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            alert("Booking cancelled!");
-            location.reload();
-          } else {
-            alert(data.message);
-          }
-        });
-    }
-  }
-
   const bookingModalEl = document.querySelector("#booking-modal");
   let bookingModal = null;
   if (bookingModalEl) {
@@ -145,7 +92,10 @@ document.addEventListener("DOMContentLoaded", function () {
           'form[data-type="cancel-booking"]'
         );
         if (cancelForm && bookingId) {
-          cancelForm.setAttribute("action", `/booking/${bookingId}/cancel?from=workspace`);
+          cancelForm.setAttribute(
+            "action",
+            `/booking/${bookingId}/cancel?from=workspace`
+          );
           // Fetch booking details via AJAX
           try {
             const resp = await fetch(`/booking/booking/${bookingId}`);
@@ -175,5 +125,95 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       console.log("Clicked");
     });
+    function showFormErrors(errors, nonFieldErrors) {
+      // clear old errors
+      ["booking_date", "start_time", "end_time", "purpose", "notes"].forEach(
+        function (name) {
+          const errEl = document.getElementById(`error_${name}`);
+          if (errEl) errEl.textContent = "";
+          const input = document.getElementById(`id_${name}`);
+          if (input) input.classList.remove("is-invalid");
+        }
+      );
+      const nonField = document.getElementById("form-non-field-errors");
+      if (nonField) nonField.textContent = "";
+
+      // set new field errors
+      if (errors) {
+        Object.entries(errors).forEach(([field, msgs]) => {
+          const errEl = document.getElementById(`error_${field}`);
+          if (errEl)
+            errEl.textContent = Array.isArray(msgs) ? msgs.join(" ") : msgs;
+          const input = document.getElementById(`id_${field}`);
+          if (input) input.classList.add("is-invalid");
+        });
+      }
+
+      // non-field errors
+      if (nonFieldErrors && nonField) {
+        nonField.textContent = Array.isArray(nonFieldErrors)
+          ? nonFieldErrors.join(" ")
+          : nonFieldErrors;
+      }
+    }
   });
 });
+
+// ===============================
+// JS FOR MY BOOKINGS PAGE TEMPLATE
+// ===============================
+
+/* Modal handling for editing bookings */
+function openEditModal(bookingId) {
+  fetch(`/booking/${bookingId}/edit-form/`)
+    .then((response) => response.text())
+    .then((html) => {
+      document.getElementById("editBookingBody").innerHTML = html;
+      document.getElementById("editBookingModal").style.display = "block";
+      document.getElementById("editBookingForm").onsubmit = function (e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        fetch(`/booking/${bookingId}/update/`, {
+          method: "POST",
+          body: formData,
+          headers: { "X-CSRFToken": formData.get("csrfmiddlewaretoken") },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert("Booking updated!");
+              location.reload();
+            } else {
+              alert(data.message);
+            }
+          });
+      };
+    });
+}
+/* close Edit Booking Modal */
+function closeEditModal() {
+  document.getElementById("editBookingModal").style.display = "none";
+}
+/* Cancel Booking Function */
+function cancelBooking(bookingId) {
+  if (confirm("Are you sure you want to delete this booking?")) {
+    const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+    const csrftoken = csrfInput ? csrfInput.value : null;
+    fetch(`/booking/${bookingId}/cancel/`, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": csrftoken,
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Booking cancelled!");
+          location.reload();
+        } else {
+          alert(data.message);
+        }
+      });
+  }
+}
