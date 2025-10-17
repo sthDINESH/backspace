@@ -372,7 +372,15 @@ See the ERD diagram above for visual representation of the database structure.
 
 
 ### Future Implementations
+The following features are planned for future releases:
 
+- **Email Notifications:** Automatic confirmation emails and booking reminders
+- **Calendar Integration:** Export bookings to Google Calendar or Outlook
+- **Recurring Bookings:** Ability to book the same space weekly
+- **Payment System:** Integration with Stripe for paid workspaces
+- **Mobile App:** Native iOS and Android applications
+- **Booking Analytics:** Usage reports and statistics for administrators
+- **QR Code Check-in:** Digital check-in system using QR codes
 
 
 ### Accessibility
