@@ -220,6 +220,38 @@ credit: dbdiagram.io, https://dbdiagram.io/
 
 
 ### Database Schema
+The database structure follows a relational model with three main entities:
+
+```
+User (Django built-in)
+  ↓ (One-to-Many)
+Booking
+  ↓ (Many-to-One)
+WorkSpace
+```
+
+**WorkSpace Model:**
+- **Fields:** name, svg_id, svg_shape, svg_x_coord, svg_y_coord, svg_width, svg_height, status, location, capacity, workspace_type, description, amenities, hourly_rate, created_at, updated_at
+- Stores information about bookable spaces (desks, meeting rooms, booths)
+- Includes SVG coordinates for interactive floor plan positioning
+- Tracks availability status (available, maintenance, reserved)
+
+**Booking Model:**
+- **Fields:** user (FK), workspace (FK), booking_date, start_time, end_time, status, purpose, notes, created_at, updated_at
+- Represents user reservations with date and time slots
+- Includes custom validation methods:
+  - `clean()` - Validates business hours (8 AM - 10 PM), prevents past bookings, checks for overlapping reservations
+  - `can_be_modified()` - Checks if booking is in the future and can be edited
+  - `is_past()` - Determines if booking date/time has passed
+- Status choices: pending, confirmed, cancelled, completed
+
+**Relationships:**
+- User → Booking: One-to-Many (one user can have multiple bookings)
+- WorkSpace → Booking: One-to-Many (one workspace can have multiple bookings)
+
+See the ERD diagram above for visual representation of the database structure.
+
+---
 
 
 
