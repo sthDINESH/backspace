@@ -398,16 +398,55 @@ The following accessibility features have been implemented:
 - **Responsive Design:** Mobile-first Bootstrap responsive design accessible on all device sizes
 - **Django Crispy Forms:** Form rendering with built-in accessibility features
 
----git
 
 
 ## Technologies Used
 
 ### Languages Used
+- **HTML5** - Structure and content of templates
+- **CSS3** - Custom styling and layout
+- **JavaScript (ES6)** - Interactive features for floor plan and form handling
+- **Python 3.12.8** - Backend logic and Django framework
 
 
+### Frameworks, Libraries & Programmes Used
+**Backend:**
+- **Django 4.2.25** - Python web framework
+- **Django Allauth 0.57.2** - Authentication system (registration, login, logout)
+- **Django Crispy Forms 2.4** - Form rendering with Bootstrap 5 styling
+- **Crispy Bootstrap5 0.7** - Bootstrap 5 template pack for Crispy Forms
+- **Gunicorn 20.1.0** - WSGI HTTP server for production deployment
+- **WhiteNoise 5.3.0** - Static file serving for production
+- **Psycopg2 2.9.11** - PostgreSQL database adapter
+- **dj-database-url 0.5.0** - Database configuration helper
+- **SQLite** - Development database
+- **PostgreSQL** - Production database (planned for Heroku deployment)
 
-### Frameworks, Libraries & Programs Used
+**Frontend:**
+- **Bootstrap 5.3.8** - CSS framework for responsive design (loaded via CDN)
+- **Font Awesome 6.x** - Icon library for user interface
+- **JavaScript (Vanilla)** - Interactive floor plan, form validation, confirmation dialogues
+
+**Development Tools:**
+- **Git** - Version control with meaningful commit messages
+- **GitHub** - Code repository, project management, and collaboration
+- **VS Code** - Primary development environment
+- **Heroku** - Cloud hosting platform (planned deployment)
+- **Python venv** - Virtual environment management
+- **Django Debug Toolbar** - Development debugging (optional)
+
+**Design Tools:**
+- **dbdiagram.io** - Database ERD design and visualisation
+- **SVG** - Interactive floor plan creation and editing
+- **Chrome DevTools** - Browser-based debugging and responsive testing
+- **config/svg_parser.py** - Custom tool to parse SVG floor plans and generate workspace fixtures
+
+**AI Tools:**
+- **Claude AI (Anthropic)** - Code generation, debugging, optimisation, and Git workflow guidance
+- **GitHub Copilot** - Code suggestions, completions, and unit test generation
+
+---
+
 
 ## Testing
 
