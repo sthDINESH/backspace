@@ -8,9 +8,9 @@
 <div class="hero-row">
     <div class="hero-text">
         {% if user.is_authenticated %}
-            <h1 class="display-1">Welcome back to <strong style="font-weight: 700;">backSpace</strong></h1>
+            <h1 class="display-1">Welcome back to <strong class="brand-tertiary">backSpace</strong></h1>
         {% else %}
-            <h1 class="display-1">Welcome to <strong style="font-weight: 700;">backSpace</strong></h1>
+            <h1 class="display-1">Welcome to <strong class="brand-tertiary">backSpace</strong></h1>
             <h2>Your Ultimate Workspace Booking Solution</h2>
             <p>
                 <a href="{% url 'account_signup' %}" class="btn btn-signup">Sign Up</a> to make a booking.

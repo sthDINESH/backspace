@@ -147,6 +147,10 @@ Mobile:
 ![Mobile Wireframe](static/assets/images/Mobile.png)
 
 
+### Project Management
+<img width="1492" height="812" alt="Screenshot 2025-10-17 at 15 48 12" src="https://github.com/user-attachments/assets/a9f950a3-5375-4330-a393-c35cdf17d801" />
+<img width="1492" height="811" alt="Screenshot 2025-10-17 at 15 58 17" src="https://github.com/user-attachments/assets/3448ab82-0bdd-4c4d-971f-6cb5e415afb1" />
+
 
 ### Typography
 <img width="1000" height="620" alt="Screenshot 2025-10-17 at 15 11 35" src="https://github.com/user-attachments/assets/9b7a655b-69f1-4093-be7d-43fc6e773893" />
@@ -301,6 +305,24 @@ See the ERD diagram above for visual representation of the database structure.
 - Delete booking functionality with JavaScript confirmation prompt
 - Status tracking (pending, confirmed, cancelled, completed)
 - AJAX-based update functionality for seamless editing experience
+
+**Features images**
+<img width="1501" height="625" alt="Screenshot 2025-10-17 at 15 53 24" src="https://github.com/user-attachments/assets/f3a77873-e938-4a50-9736-ac3972efcd79" />
+<img width="1507" height="820" alt="Screenshot 2025-10-17 at 15 56 08" src="https://github.com/user-attachments/assets/35803692-855b-4840-b363-417d034035f5" />
+<img width="1503" height="822" alt="Screenshot 2025-10-17 at 15 54 51" src="https://github.com/user-attachments/assets/6b0caed9-7798-470c-b1a3-f3e0c9b7438b" />
+<img width="1503" height="815" alt="Screenshot 2025-10-17 at 15 53 19" src="https://github.com/user-attachments/assets/8697546a-3110-4d36-85fc-8c5cb206d9f8" />
+<img width="1509" height="822" alt="Screenshot 2025-10-17 at 15 53 55" src="https://github.com/user-attachments/assets/1fa943c1-45d0-4a84-952a-f76fb180d656" />
+<img width="3010" height="1638" alt="Screenshot 2025-10-17 at 15 55 48" src="https://github.com/user-attachments/assets/9196464a-4d86-41a8-bd36-ab9c60b08ea6" />
+<img width="1504" height="816" alt="Screenshot 2025-10-17 at 15 53 52" src="https://github.com/user-attachments/assets/479ca453-5714-4bf2-8612-f18ca1bd8440" />
+<img width="1495" height="829" alt="Screenshot 2025-10-17 at 15 55 42" src="https://github.com/user-attachments/assets/6f850ce9-a747-4b1c-8182-dc303beaf902" />
+<img width="1489" height="836" alt="Screenshot 2025-10-17 at 15 55 35" src="https://github.com/user-attachments/assets/9b761b7e-61a6-4281-9f65-e2e5a39a8f35" />
+<img width="1506" height="815" alt="Screenshot 2025-10-17 at 15 53 12" src="https://github.com/user-attachments/assets/5266670a-e31c-45a4-a801-010a664e721a" />
+<img width="1501" height="813" alt="Screenshot 2025-10-17 at 15 53 47" src="https://github.com/user-attachments/assets/bea80b92-87e0-4360-adaf-921d6b2e5268" />
+<img width="1507" height="810" alt="Screenshot 2025-10-17 at 15 55 29" src="https://github.com/user-attachments/assets/542c30f6-3736-4df6-ba80-f1947dcdff83" />
+<img width="1503" height="822" alt="Screenshot 2025-10-17 at 15 53 32" src="https://github.com/user-attachments/assets/805015ea-e6f8-4304-8fb1-04ac769281ce" />
+<img width="1504" height="816" alt="Screenshot 2025-10-17 at 15 55 19" src="https://github.com/user-attachments/assets/0c9c5e02-13dd-43b4-ab01-9802b72d9a25" />
+<img width="1503" height="819" alt="Screenshot 2025-10-17 at 15 56 19" src="https://github.com/user-attachments/assets/b9adac47-9f0a-4fa4-a0e7-c3f317a22228" />
+
 
 
 ### CRUD Operations
@@ -478,8 +500,15 @@ Mobile
 Desktop
 <img width="1009" height="727" alt="Desktop - BACKSPACE" src="https://github.com/user-attachments/assets/8dba250b-48ef-4597-8441-506a284e5041" />
 
+#### Javascript
+![Validation results](static/assets/images/eshint_validation.png)
 
-
+#### Python Lint
+![admin.py](static/assets/images/ci_admin_py.png)
+![forms.py](static/assets/images/ci_forms_py.png)
+![models.py](static/assets/images/ci_models_py.png)
+![views.py](static/assets/images/ci_views_py.png)
+![urls.py](static/assets/images/ci_urls_py.png)
 ## Bugs
 
 ### Fixed Bugs
@@ -641,7 +670,13 @@ All AI-generated code was thoroughly reviewed, tested, and modified as needed to
 - **Team Members** - For collaboration on shared components
 - **Django Community** - For excellent documentation and support
 
+https://github.com/sthDINESH
 
+https://github.com/sooiee
+
+https://github.com/CXBeale
+
+https://github.com/Gilberto2025123
 
 
 
