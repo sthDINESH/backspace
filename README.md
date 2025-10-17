@@ -2,7 +2,8 @@
 
 backSPACE is a Django-based workspace booking system that allows users to book desks, meeting rooms, and collaboration spaces in real-time. The application features an interactive SVG floor plan, CRUD operations for managing bookings, and an admin panel for workspace management.
 
-![Am I Responsive Image](static/assets/images/amiresponsive.png)
+![Am I Responsive Image] 
+<img width="1314" height="765" alt="Screenshot 2025-10-17 at 15 21 25" src="https://github.com/user-attachments/assets/a8b003e9-f89f-404d-becf-57ca564e98d4" />
 
 [View Live Site](https://backspace-c8042b918673.herokuapp.com/) | [View GitHub Repository](https://github.com/sthDINESH/backspace)
 
@@ -310,8 +311,33 @@ See the ERD diagram above for visual representation of the database structure.
 
 ## Deployment
 
-### Heroku Deployment
 
+This website is deployed to Heroku from a GitHub repository, the following steps were taken:
+
+### Creating Repository on GitHub
+First make sure you are signed into GitHub and go to the code institutes template, which can be found here.
+Then click on use this template and select Create a new repository from the drop-down. Enter the name for the repository and click Create repository from template.
+Once the repository was created, I clicked the green gitpod button to create a workspace in gitpod so that I could write the code for the site.
+
+### Creating an app on Heroku
+After creating the repository on GitHub, head over to heroku and sign in.
+On the home page, click New and Create new app from the drop down.
+Give the app a name(this must be unique) and select a region I chose Europe as I am in Europe, Then click Create app.
+
+### Create a database
+Log into CIdatabase maker
+add your email address in input field and submit the form
+open database link in your email
+paste dabase URL in your DATABASE_URL variable in env.py file and in Heroku config vars
+
+### Deploying to Heroku.
+Head back over to heroku and click on your app and then go to the Settings tab
+On the settings page scroll down to the config vars section and enter the DATABASE_URL which you will set equal to the PostgresSQL URL, create Secret key this can be anything, CLOUDINARY_URL this will be set to your cloudinary url and finally Port which will be set to 8000.
+
+Then scroll to the top and go to the deploy tab and go down to the Deployment method section and select GitHub and then sign into your account.
+Below that in the search for a repository to connect to search box enter the name of your repository that you created on GitHub and click connect
+Once it has been connected scroll down to the Manual Deploy and click Deploy branch when it has deployed you will see a view app button below and this will bring you to your newly deployed app.
+Please note that when deploying manually you will have to deploy after each change you make to your repository.
 
 
 ### Local Development
@@ -343,6 +369,13 @@ See the ERD diagram above for visual representation of the database structure.
 
 
 ### Media
+ - Photo by Edmond Dantès from Pexels: https://www.pexels.com/photo/woman-in-red-shirt-sitting-at-the-table-4339473/
+ - Photo by SHVETS production from Pexels: https://www.pexels.com/photo/women-sitting-on-the-ground-looking-at-the-silver-laptop-9049688/
+ - Photo by Edmond Dantès from Pexels: https://www.pexels.com/photo/people-working-in-the-office-8068217/
+ - Photo by fauxels from Pexels: https://www.pexels.com/photo/two-women-sitting-in-front-of-computer-3184350/
+ - Photo by Antoni Shkraba Studio from Pexels: https://www.pexels.com/photo/people-in-the-office-having-a-meeting-7163354/
+ - Photo by Edmond Dantès from Pexels: https://www.pexels.com/photo/a-bearded-man-in-black-suit-working-on-his-laptop-4339866/
+ - ChatGPT generated logo/favicon
 
 
 
