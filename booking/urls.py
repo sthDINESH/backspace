@@ -16,4 +16,14 @@ urlpatterns = [
     ),
     path('', views.home, name='home'),
     path('my-bookings/', views.my_bookings, name='my_bookings'),
+    path(
+        'booking/workspace/<int:workspace_id>',
+        views.get_workspace_details,
+        name="workspace_details",
+    ),
+    path(
+        'booking/booking/<int:booking_id>',
+        views.get_booking_details,
+        name="booking_details",
+    ),
 ]
